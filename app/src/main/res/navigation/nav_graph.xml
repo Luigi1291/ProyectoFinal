@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/fgmt1"
+    android:id="@+id/nav_graph">
+
+    <fragment
+        android:id="@+id/fgmt1"
+        android:name="com.example.taller_7_navigationdrawer.Fragments.Fragment1"
+        android:label="@string/fragment_1"
+        tools:layout="@layout/fragment_fragment1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" >
+
+        <action
+            android:id="@+id/fragment1to2"
+            app:destination="@id/fgmt2"/>
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fgmt2"
+        android:name="com.example.taller_7_navigationdrawer.Fragments.Fragment2"
+        android:label="@string/fragment_2"
+        tools:layout="@layout/fragment_fragment2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:navGraph="@navigation/nav_graph">
+        <action
+            android:id="@+id/fragment2to3"
+            app:destination="@id/fgmt3"/>
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fgmt3"
+        android:name="com.example.taller_7_navigationdrawer.Fragments.Fragment3"
+        android:label="@string/fragment_3"
+        tools:layout="@layout/fragment_fragment3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:navGraph="@navigation/nav_graph" >
+
+        <argument
+            android:name="message"
+            android:defaultValue="No Message"
+            app:argType="string"/>
+    </fragment>
+
+</navigation>

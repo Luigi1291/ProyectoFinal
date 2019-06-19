@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Taller_7_NavigationDrawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="abrir_sitio">Abrir Sitio Web</string>
+    <string name="Fragment11">Fragment</string>
+
+    <string name="menu_home">Tomar Foto</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="fragment_1">Fragment 1</string>
+    <string name="fragment_2">Fragment 2</string>
+    <string name="fragment_3">Fragment 3</string>
+    <string name="message">Message</string>
+
+    <!-- Login Values -->
+    <string name="usernameHint">Usuario</string>
+    <string name="passwordHint">Contraseña</string>
+    <string name="emailHint">Correo</string>
+    <string name="btnLoginText">Ingresar</string>
+    <string name="btnSignUpText">Registrarse</string>
+    <string name="btnSignUpNow">Registrar Usuario</string>
+
+</resources>

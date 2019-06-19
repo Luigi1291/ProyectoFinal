@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/holo_green_dark"
+    tools:context=".Fragments.Fragment2">
+
+
+    <TextView
+        android:id="@+id/txtFragment"
+        android:layout_width="match_parent"
+        android:layout_height="440dp"
+        android:gravity="center"
+        android:text="@string/fragment_2"
+        android:textSize="36sp" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtFragment">
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_message"
+            android:textSize="26dp"
+            android:gravity="center"
+            android:hint="@string/message"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_fgmt2_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:src="@drawable/ic_menu_send" />
+
+
+
+</RelativeLayout>

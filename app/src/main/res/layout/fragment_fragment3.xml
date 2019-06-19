@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_orange_dark"
+    tools:context=".Fragments.Fragment3">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/txt_frmtid"
+        android:layout_width="match_parent"
+        android:layout_height="440dp"
+        android:gravity="center"
+        android:text="@string/fragment_3"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/txt_showmsj"
+        android:layout_width="match_parent"
+        android:layout_height="440dp"
+        android:layout_below="@id/txt_frmtid"
+        android:gravity="center"
+        android:textSize="36sp" />
+
+</RelativeLayout>

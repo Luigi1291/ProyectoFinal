@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "373708316584",
+    "firebase_url": "https://textdetection-d5775.firebaseio.com",
+    "project_id": "textdetection-d5775",
+    "storage_bucket": "textdetection-d5775.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373708316584:android:ee76b913f92f64f2",
+        "android_client_info": {
+          "package_name": "com.example.taller_7_navigationdrawer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373708316584-e4iv61jnncg0t2366jqkgj94hj4r31q5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD7UQIycwqhHi_qpnyhraYuyafE3A6dGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "373708316584-e4iv61jnncg0t2366jqkgj94hj4r31q5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
