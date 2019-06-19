@@ -48,6 +48,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -88,6 +90,8 @@ public class MainActivity extends AppCompatActivity
 
                                      */
                                     String resultText = result.getText();
+                                    Toast.makeText(getApplicationContext(), result.getText(),
+                                            LENGTH_LONG).show();
                                     for (FirebaseVisionText.TextBlock block : result.getTextBlocks()) {
                                         String blockText = block.getText();
                                         Float blockConfidence = block.getConfidence();
@@ -119,8 +123,8 @@ public class MainActivity extends AppCompatActivity
                                             // ...
                                         }
                                     });
-                    Toast.makeText(this, selectedImage.toString(),
-                            Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this, selectedImage.toString(),
+                            //Toast.LENGTH_LONG).show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
