@@ -10,15 +10,23 @@
       "client_info": {
         "mobilesdk_app_id": "1:640164084131:android:1849098fb4a6a2fc",
         "android_client_info": {
-          "package_name": "com.example.TextDetectionSample"
+          "package_name": "com.example.taller_7_navigationdrawer"
         }
       },
       "oauth_client": [
         {
+          "client_id": "640164084131-eo393p1pr5p7f1no3b7qlt6iknofkn08.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.taller_7_navigationdrawer",
+            "certificate_hash": "07b816e7b11bc6eacb9ecdd9488e10597da1bc41"
+          }
+        },
+        {
           "client_id": "640164084131-r58rjf1gugbs5kka5lpvunv6btsqcl19.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.TextDetectionSample",
+            "package_name": "com.example.taller_7_navigationdrawer",
             "certificate_hash": "3e72e527ef11e95edf674c53a7ab4cb6e9011eee"
           }
         },

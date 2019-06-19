@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity
                     Uri selectedImage = imageUri;
                     int writePermissionCode = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     int readPermissionCode = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-                    if (writePermissionCode == PackageManager.PERMISSION_DENIED || writePermissionCode == PackageManager.PERMISSION_DENIED) {
+                    if (readPermissionCode == PackageManager.PERMISSION_DENIED || writePermissionCode == PackageManager.PERMISSION_DENIED) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
@@ -137,7 +137,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

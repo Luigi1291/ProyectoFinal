@@ -4,7 +4,7 @@ apply plugin: 'androidx.navigation.safeargs'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.TextDetectionSample"
+        applicationId "com.example.taller_7_navigationdrawer"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
@@ -21,20 +21,30 @@ android {
 }
 
 dependencies {
+    ext.NavigationBarVersion = "1.0.0"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0"
-    implementation "android.arch.navigation:navigation-ui-ktx:1.0.0"
+
+    //Navigation Bar
+    implementation "android.arch.navigation:navigation-fragment:$NavigationBarVersion"
+    // For Kotlin use navigation-fragment-ktx
+    implementation "android.arch.navigation:navigation-ui:$NavigationBarVersion"
+    // For Kotlin use navigation-ui-ktx
     implementation 'com.android.support:support-v4:28.0.0'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    implementation 'com.android.support:multidex:1.0.3'
+
+    //FireBase
+    implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.firebase:firebase-firestore:19.0.2'
     implementation 'com.google.firebase:firebase-ml-vision:20.0.0'
-    implementation 'com.android.support:multidex:1.0.3'
 }
 apply plugin: 'com.google.gms.google-services'

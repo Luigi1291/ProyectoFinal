@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.firebase:firebase-ml-vision:20.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b651a3d65f1c333f5ed427ed3cbcf313/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b651a3d65f1c333f5ed427ed3cbcf313/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/140dbd3467b0b5796db63c15351fbc3a/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/140dbd3467b0b5796db63c15351fbc3a/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-ml-vision/20.0.0/e4348891a2acf8f133a20f188a58220a582f7e9e/firebase-ml-vision-20.0.0-javadoc.jar!/" />

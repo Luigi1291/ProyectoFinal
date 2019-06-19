@@ -22,7 +22,7 @@
     <string name="message">Message</string>
 
     <!-- Login Values -->
-    <string name="usernameHint">Usuario</string>
+    <string name="userNameHint">Nombre de Usuario</string>
     <string name="passwordHint">Contraseña</string>
     <string name="emailHint">Correo</string>
     <string name="btnLoginText">Ingresar</string>

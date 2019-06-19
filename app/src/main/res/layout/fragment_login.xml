@@ -14,21 +14,21 @@
         android:gravity="center">
 
         <EditText
-            android:id="@+id/txtUserName"
+            android:id="@+id/txtLoginEmail"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:hint="@string/usernameHint"
+            android:hint="@string/emailHint"
             android:textAlignment="center"
             android:singleLine="true"
             android:layout_marginBottom="10dp"/>
 
         <EditText
-            android:id="@+id/txtPassword"
+            android:id="@+id/txtLoginPassword"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:hint="@string/passwordHint"
             android:textAlignment="center"
-            android:layout_below="@id/txtUserName"
+            android:layout_below="@id/txtLoginEmail"
             android:singleLine="true"
             android:layout_marginBottom="10dp"/>
 
@@ -36,7 +36,7 @@
             android:id="@+id/btnLogin"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtPassword"
+            android:layout_below="@id/txtLoginPassword"
             android:gravity="center"
             android:text="@string/btnLoginText"
             android:layout_marginTop="50dp"/>
