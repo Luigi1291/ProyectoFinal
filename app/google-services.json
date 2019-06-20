@@ -1,50 +1,42 @@
 {
   "project_info": {
-    "project_number": "640164084131",
-    "firebase_url": "https://proyectofinal-3aef0.firebaseio.com",
-    "project_id": "proyectofinal-3aef0",
-    "storage_bucket": "proyectofinal-3aef0.appspot.com"
+    "project_number": "422294664337",
+    "firebase_url": "https://proyectofinal-d033d.firebaseio.com",
+    "project_id": "proyectofinal-d033d",
+    "storage_bucket": "proyectofinal-d033d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:640164084131:android:1849098fb4a6a2fc",
+        "mobilesdk_app_id": "1:422294664337:android:6c681c97f88d9116",
         "android_client_info": {
-          "package_name": "com.example.taller_7_navigationdrawer"
+          "package_name": "com.lusberc.billwallet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "640164084131-eo393p1pr5p7f1no3b7qlt6iknofkn08.apps.googleusercontent.com",
+          "client_id": "422294664337-5enbo0si5jnpbvl8h16rqgheoktiv5t6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.taller_7_navigationdrawer",
-            "certificate_hash": "07b816e7b11bc6eacb9ecdd9488e10597da1bc41"
+            "package_name": "com.lusberc.billwallet",
+            "certificate_hash": "90121afdb90ea697cc09368eb02805182f1e6292"
           }
         },
         {
-          "client_id": "640164084131-r58rjf1gugbs5kka5lpvunv6btsqcl19.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.taller_7_navigationdrawer",
-            "certificate_hash": "3e72e527ef11e95edf674c53a7ab4cb6e9011eee"
-          }
-        },
-        {
-          "client_id": "640164084131-lnjnfmcsdf79d3b151c03e1kkfpfgpjs.apps.googleusercontent.com",
+          "client_id": "422294664337-3sgst47ctpi7e3rf2aoecovla05922ft.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBtIdylD4QSNIvgswoLRvzFGSkTIzKmu2Q"
+          "current_key": "AIzaSyCOXA1f02JZJl-H77OVUOCgu_9f9PTtI-U"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "640164084131-lnjnfmcsdf79d3b151c03e1kkfpfgpjs.apps.googleusercontent.com",
+              "client_id": "422294664337-3sgst47ctpi7e3rf2aoecovla05922ft.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
