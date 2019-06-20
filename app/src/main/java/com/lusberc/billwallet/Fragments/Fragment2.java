@@ -1,7 +1,5 @@
-package com.example.taller_7_navigationdrawer.Fragments;
+package com.lusberc.billwallet.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
@@ -10,11 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import androidx.navigation.Navigation;
 
-import com.example.taller_7_navigationdrawer.R;
+import com.lusberc.billwallet.R;
 
 public class Fragment2 extends Fragment {
 
@@ -38,8 +35,8 @@ public class Fragment2 extends Fragment {
     }
 
     private void setupUI(View view) {
-        FloatingActionButton btn_next = (FloatingActionButton) view.findViewById(R.id.btn_fgmt2_next);
-        final TextInputEditText editText = (TextInputEditText) view.findViewById(R.id.txt_message);
+        FloatingActionButton btn_next = view.findViewById(R.id.btn_fgmt2_next);
+        final TextInputEditText editText = view.findViewById(R.id.txt_message);
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

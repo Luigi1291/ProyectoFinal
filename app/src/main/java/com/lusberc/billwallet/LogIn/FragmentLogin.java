@@ -1,4 +1,4 @@
-package com.example.taller_7_navigationdrawer.LogIn;
+package com.lusberc.billwallet.LogIn;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.taller_7_navigationdrawer.MainActivity;
-import com.example.taller_7_navigationdrawer.R;
+import com.lusberc.billwallet.MainActivity;
+import com.lusberc.billwallet.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
