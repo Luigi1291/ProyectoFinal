@@ -1,16 +1,13 @@
-package com.example.taller_7_navigationdrawer.Fragments;
+package com.lusberc.billwallet.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.taller_7_navigationdrawer.R;
+import com.lusberc.billwallet.R;
 
 public class Fragment3 extends Fragment {
 
@@ -34,7 +31,7 @@ public class Fragment3 extends Fragment {
     }
 
     private void setupUI(View view) {
-        TextView txtmessage = (TextView) view.findViewById(R.id.txt_showmsj);
+        TextView txtmessage = view.findViewById(R.id.txt_showmsj);
         Fragment3Args args = Fragment3Args
                 .fromBundle(getArguments());
         txtmessage.setText(args.getMessage());

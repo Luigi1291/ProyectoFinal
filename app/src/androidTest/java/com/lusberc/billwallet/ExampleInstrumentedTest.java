@@ -1,4 +1,4 @@
-package com.example.taller_7_navigationdrawer;
+package com.lusberc.billwallet;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
