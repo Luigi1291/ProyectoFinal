@@ -4,7 +4,7 @@ apply plugin: 'androidx.navigation.safeargs'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.taller_7_navigationdrawer"
+        applicationId "com.lusberc.billwallet"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
@@ -35,6 +35,7 @@ dependencies {
     // For Kotlin use navigation-ui-ktx
     implementation 'com.android.support:support-v4:28.0.0'
 
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -44,6 +45,7 @@ dependencies {
     //FireBase
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-database:16.0.4'
     implementation 'com.google.firebase:firebase-firestore:19.0.2'
     implementation 'com.google.firebase:firebase-ml-vision:20.0.0'
 }

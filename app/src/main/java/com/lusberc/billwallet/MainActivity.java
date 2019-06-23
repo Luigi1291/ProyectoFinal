@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -26,16 +27,23 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 import com.google.firebase.ml.vision.text.RecognizedLanguage;
+import com.google.firestore.v1.WriteResult;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,93 +56,21 @@ public class MainActivity extends AppCompatActivity
 
     private Uri imageUri;
     private static final int TAKE_PICTURE = 1;
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case TAKE_PICTURE:
-                if (resultCode == RESULT_OK) {
-                    Uri selectedImage = imageUri;
-                    int writePermissionCode = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                    int readPermissionCode = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-                    if (readPermissionCode == PackageManager.PERMISSION_DENIED || writePermissionCode == PackageManager.PERMISSION_DENIED) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                        }
-                    } else {
-
-                    try {
-                        FirebaseVisionImage image;
-                    image = FirebaseVisionImage.fromFilePath(getApplicationContext(), selectedImage);
-                    FirebaseVisionTextRecognizer textRecognizer = FirebaseVision.getInstance()
-                            .getOnDeviceTextRecognizer();
-                    textRecognizer.processImage(image)
-                            .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
-                                @Override
-                                public void onSuccess(FirebaseVisionText result) {
-                                    /*
-                                    If the text recognition operation succeeds, a FirebaseVisionText object will be passed to the success listener.
-                                    A FirebaseVisionText object contains the full text recognized in the image and zero or more TextBlock objects.
-                                    Each TextBlock represents a rectangular block of text, which contains zero or more Line objects.
-                                    Each Line object contains zero or more Element objects, which represent words and word-like entities (dates, numbers, and so on).
-                                    For each TextBlock , Line , and Element object, you can get the text recognized in the region and the bounding coordinates of the region.
-
-                                     */
-                                    String resultText = result.getText();
-                                    Toast.makeText(getApplicationContext(), result.getText(),
-                                            LENGTH_LONG).show();
-                                    for (FirebaseVisionText.TextBlock block : result.getTextBlocks()) {
-                                        String blockText = block.getText();
-                                        Float blockConfidence = block.getConfidence();
-                                        List<RecognizedLanguage> blockLanguages = block.getRecognizedLanguages();
-                                        Point[] blockCornerPoints = block.getCornerPoints();
-                                        Rect blockFrame = block.getBoundingBox();
-                                        for (FirebaseVisionText.Line line : block.getLines()) {
-                                            String lineText = line.getText();
-                                            Float lineConfidence = line.getConfidence();
-                                            List<RecognizedLanguage> lineLanguages = line.getRecognizedLanguages();
-                                            Point[] lineCornerPoints = line.getCornerPoints();
-                                            Rect lineFrame = line.getBoundingBox();
-                                            for (FirebaseVisionText.Element element : line.getElements()) {
-                                                String elementText = element.getText();
-                                                Float elementConfidence = element.getConfidence();
-                                                List<RecognizedLanguage> elementLanguages = element.getRecognizedLanguages();
-                                                Point[] elementCornerPoints = element.getCornerPoints();
-                                                Rect elementFrame = element.getBoundingBox();
-                                            }
-                                        }
-                                    }
-                                }
-                            })
-                            .addOnFailureListener(
-                                    new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            // Task failed with an exception
-                                            // ...
-                                        }
-                                    });
-                    //Toast.makeText(this, selectedImage.toString(),
-                            //Toast.LENGTH_LONG).show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT)
-                            .show();
-                    Log.e("Camera", e.toString());
-                    Log.e("Camera", e.getStackTrace().toString());
-                }
-                    }
-            }
-        }
-    }
+    private FirebaseAuth mAuth;
+    FirebaseFirestore db;
+    FirebaseUser currentUser;
+    private static final String TAG = "MAIN ACTIVITY::";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        db = FirebaseFirestore.getInstance();
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .build();
+        db.setFirestoreSettings(settings);
         FirebaseApp.initializeApp(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -154,6 +90,91 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case TAKE_PICTURE:
+                if (resultCode == RESULT_OK) {
+                    Uri selectedImage = imageUri;
+                    int writePermissionCode = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    int readPermissionCode = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+                    if (readPermissionCode == PackageManager.PERMISSION_DENIED || writePermissionCode == PackageManager.PERMISSION_DENIED) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                        }
+                    } else {
+
+                    try {
+                        FirebaseVisionImage image;
+                        image = FirebaseVisionImage.fromFilePath(getApplicationContext(), selectedImage);
+                        FirebaseVisionTextRecognizer textRecognizer = FirebaseVision.getInstance()
+                        .getOnDeviceTextRecognizer();
+                        textRecognizer.processImage(image)
+                            .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
+                                @Override
+                                public void onSuccess(FirebaseVisionText result) {
+
+                                    String resultText = result.getText();
+                                    showTextOnFragment(resultText);
+                                    addImageTextToFirebase(resultText);
+                                    /*
+                                    If the text recognition operation succeeds, a FirebaseVisionText object will be passed to the success listener.
+                                    A FirebaseVisionText object contains the full text recognized in the image and zero or more TextBlock objects.
+                                    Each TextBlock represents a rectangular block of text, which contains zero or more Line objects.
+                                    Each Line object contains zero or more Element objects, which represent words and word-like entities (dates, numbers, and so on).
+                                    For each TextBlock , Line , and Element object, you can get the text recognized in the region and the bounding coordinates of the region.
+
+                                     */
+
+
+                                    /*Yo can also iterate through the blocks and extract the text from there
+                                    * This is more used on cases that you require an specific value*/
+                                    /*for (FirebaseVisionText.TextBlock block : result.getTextBlocks()) {
+                                        String blockText = block.getText();
+                                        Float blockConfidence = block.getConfidence();
+                                        List<RecognizedLanguage> blockLanguages = block.getRecognizedLanguages();
+                                        Point[] blockCornerPoints = block.getCornerPoints();
+                                        Rect blockFrame = block.getBoundingBox();
+                                        for (FirebaseVisionText.Line line : block.getLines()) {
+                                            String lineText = line.getText();
+                                            Float lineConfidence = line.getConfidence();
+                                            List<RecognizedLanguage> lineLanguages = line.getRecognizedLanguages();
+                                            Point[] lineCornerPoints = line.getCornerPoints();
+                                            Rect lineFrame = line.getBoundingBox();
+                                            for (FirebaseVisionText.Element element : line.getElements()) {
+                                                String elementText = element.getText();
+                                                Float elementConfidence = element.getConfidence();
+                                                List<RecognizedLanguage> elementLanguages = element.getRecognizedLanguages();
+                                                Point[] elementCornerPoints = element.getCornerPoints();
+                                                Rect elementFrame = element.getBoundingBox();
+                                            }
+                                        }
+                                    }*/
+                                }
+                            })
+                            .addOnFailureListener(
+                                    new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            showToastMsj("Failed to process text from image");
+                                        }
+                                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    showToastMsj("Failed to load");
+                    Log.e("Camera", e.toString());
+                    Log.e("Camera", e.getStackTrace().toString());
+                }
+                    }
+            }
+        }
+    }
+
+
 
     @Override
     public void onBackPressed() {
@@ -235,6 +256,44 @@ public class MainActivity extends AppCompatActivity
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         startActivityForResult(intent, TAKE_PICTURE);
+    }
+
+    public void showToastMsj(String message){
+        Toast.makeText(getApplicationContext(), message,
+                LENGTH_LONG).show();
+    }
+
+    private void showTextOnFragment(String text){
+        TextView txtRes = this.findViewById(R.id.txtResult);
+        txtRes.setText(text);
+    }
+
+    private void addImageTextToFirebase(String imageText){
+
+        db.collection("textBills")
+                .document(currentUser.getUid())
+                .set(imageText)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void documentReference) {
+                        Log.d(TAG, "Image Text added for user "+ currentUser.getDisplayName());
+                        Snackbar mySnackbar = Snackbar.make(getCurrentFocus(),
+                                "Image text added with ID:" ,
+                                Snackbar.LENGTH_SHORT);
+                        //mySnackbar.setAction(R.string.undo_string, new MyUndoListener());
+                        mySnackbar.show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding bill", e);
+                        Snackbar mySnackbar = Snackbar.make(getCurrentFocus(),
+                                "Error adding bill", Snackbar.LENGTH_SHORT);
+                        //mySnackbar.setAction(R.string.undo_string, new MyUndoListener());
+                        mySnackbar.show();
+                    }
+                });
     }
 
 

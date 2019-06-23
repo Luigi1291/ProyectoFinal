@@ -1,4 +1,4 @@
-package com.example.taller_7_navigationdrawer.Fragments;
+package com.lusberc.billwallet.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

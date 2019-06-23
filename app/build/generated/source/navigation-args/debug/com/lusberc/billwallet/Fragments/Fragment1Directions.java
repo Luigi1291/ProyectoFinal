@@ -1,9 +1,9 @@
-package com.example.taller_7_navigationdrawer.Fragments;
+package com.lusberc.billwallet.Fragments;
 
 import android.support.annotation.NonNull;
 import androidx.navigation.ActionOnlyNavDirections;
 import androidx.navigation.NavDirections;
-import com.example.taller_7_navigationdrawer.R;
+import com.lusberc.billwallet.R;
 
 public class Fragment1Directions {
   private Fragment1Directions() {

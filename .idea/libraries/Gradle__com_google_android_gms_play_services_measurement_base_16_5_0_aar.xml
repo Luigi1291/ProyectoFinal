@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.android.gms:play-services-measurement-base:16.5.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/053248f061e3ae794a3c170ab55b953e/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/053248f061e3ae794a3c170ab55b953e/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/50444a234f579cd8da9a1d9c74de2f11/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/50444a234f579cd8da9a1d9c74de2f11/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-measurement-base/16.5.0/54af660970b45e47b9964f10ccc105955ac24e08/play-services-measurement-base-16.5.0-javadoc.jar!/" />
