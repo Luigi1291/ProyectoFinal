@@ -1,5 +1,6 @@
 package com.lusberc.billwallet.LogIn;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,13 +21,14 @@ import com.lusberc.billwallet.MainActivity;
 import com.lusberc.billwallet.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.lusberc.billwallet.Utilities.GeneralValidations;
 
 import static android.support.constraint.Constraints.TAG;
 
 public class FragmentLogin extends Fragment {
 
     private FirebaseAuth mAuth;
-
+    ProgressDialog dialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,9 @@ public class FragmentLogin extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        //Loading Page
+        dialog = new ProgressDialog(view.getContext());
 
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -60,10 +65,11 @@ public class FragmentLogin extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                if(txtUser.getText().toString().isEmpty() || txtPassw.getText().toString().isEmpty()){
-                    Toast.makeText(getActivity().getApplicationContext(), "Debe ingresar sus credenciales.", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if(GeneralValidations.validateLoginFields(view, txtUser, txtPassw)) {
+                    dialog.setMessage(getString(R.string.loadingPage));
+                    dialog.setCancelable(false);
+                    dialog.show();
+
                     mAuth.signInWithEmailAndPassword(txtUser.getText().toString(), txtPassw.getText().toString())
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -82,6 +88,7 @@ public class FragmentLogin extends Fragment {
                             }
                         });
                 }
+
             }
         });
 
@@ -108,5 +115,8 @@ public class FragmentLogin extends Fragment {
             getActivity().startActivity(intent);
             getActivity().finish();
         }
+        dialog.hide();
     }
+
+
 }

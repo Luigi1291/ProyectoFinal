@@ -24,10 +24,18 @@
     <!-- Login Values -->
     <string name="userNameHint">Nombre de Usuario</string>
     <string name="passwordHint">Contraseña</string>
-    <string name="confirmPasswordHint">Confirmar Contraseña</string>
+    <string name="confirmPasswordHint">Confirmar</string>
     <string name="emailHint">Correo</string>
     <string name="btnLoginText">Ingresar</string>
     <string name="btnSignUpText">Registrarse</string>
     <string name="btnSignUpNow">Registrar Usuario</string>
 
+    <!-- Validations -->
+    <string name="invalid_email">Correo Inválido</string>
+    <string name="invalid_passw">Contraseña Inválida</string>
+    <string name="invalid_format">Formato Inválido</string>
+    <string name="invalid_passwLength">Al menos 6 caracteres</string>
+    <string name="invalid_confirmPassw">Contraseña Incorrecta</string>
+
+    <string name="loadingPage">Cargando...</string>
 </resources>

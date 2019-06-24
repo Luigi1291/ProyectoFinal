@@ -1,5 +1,6 @@
 package com.lusberc.billwallet.LogIn;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,17 +13,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.lusberc.billwallet.MainActivity;
 import com.lusberc.billwallet.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.lusberc.billwallet.Utilities.GeneralValidations;
 
 public class FragmentSignUp extends Fragment {
 
     private FirebaseAuth mAuth;
     private String TAG = "FragmentSignUp";
+    ProgressDialog dialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +40,10 @@ public class FragmentSignUp extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
+
+        //Loading Page
+        dialog = new ProgressDialog(view.getContext());
+
         setupUI(view);
         return view;
     }
@@ -45,14 +54,16 @@ public class FragmentSignUp extends Fragment {
         btnSignUpNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText txtEmail = view.findViewById(R.id.txtSignEmail);
+                EditText txtEmail = view.findViewById(R.id.txtSignEmail);
                 EditText txtPassword = view.findViewById(R.id.txtSignPassword);
+                EditText txtConfirmPassword = view.findViewById(R.id.txtConfirmSignPassword);
 
-                String email = txtEmail.getText().toString();
-                String password = txtPassword.getText().toString();
+                if (GeneralValidations.validateSignUpFields(view, txtEmail, txtPassword, txtConfirmPassword)){
+                    dialog.setMessage(getString(R.string.loadingPage));
+                    dialog.setCancelable(false);
+                    dialog.show();
 
-                if (validateFields(email, password)){
-                    mAuth.createUserWithEmailAndPassword(email, password)
+                    mAuth.createUserWithEmailAndPassword(txtEmail.getText().toString(), txtPassword.getText().toString())
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -62,8 +73,14 @@ public class FragmentSignUp extends Fragment {
                                     startApp(view);
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(getActivity().getApplicationContext(), "No fue posible registrar el usuario.", Toast.LENGTH_SHORT).show();
+                                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                        Toast.makeText(getActivity().getApplicationContext(),"Ya existe un usuario con éste correo.", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else {
+                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                        Toast.makeText(getActivity().getApplicationContext(), "No fue posible registrar el usuario.", Toast.LENGTH_SHORT).show();
+                                        startApp(null);
+                                    }
                                 }
                             }
                         });
@@ -71,39 +88,14 @@ public class FragmentSignUp extends Fragment {
                 }
         });
     }
-    private boolean validateFields(String email, String password){
-        boolean isOk = true;
 
-        if(email.isEmpty()){
-            Toast.makeText(getActivity().getApplicationContext(), "Debe ingresar un correo.", Toast.LENGTH_SHORT).show();
-            isOk = false;
-        }
-        else{
-            String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-            if(!email.matches(regex)){
-                Toast.makeText(getActivity().getApplicationContext(), "Formato de correo inválido.", Toast.LENGTH_SHORT).show();
-                isOk = false;
-            }
-            else{
-                if(password.isEmpty()){
-                    Toast.makeText(getActivity().getApplicationContext(), "Debe ingresar una contraseña.", Toast.LENGTH_SHORT).show();
-                    isOk = false;
-                }
-                else {
-                    if(password.length() < 6){
-                        Toast.makeText(getActivity().getApplicationContext(), "La contraseña debe contener al menos 6 cáracteres.", Toast.LENGTH_SHORT).show();
-                        isOk = false;
-                    }
-                }
-            }
-        }
-
-        return isOk;
-    }
     private void startApp(View view){
-        Intent intent = new Intent(view.getContext(), MainActivity.class);
-        //intent.putExtra("RESULT_VALUE", resultado.toString());
-        getActivity().startActivity(intent);
-        getActivity().finish();
+        if(view != null) {
+            Intent intent = new Intent(view.getContext(), MainActivity.class);
+            //intent.putExtra("RESULT_VALUE", resultado.toString());
+            getActivity().startActivity(intent);
+            getActivity().finish();
+        }
+        dialog.hide();
     }
 }
