@@ -30,13 +30,25 @@
             android:textAlignment="center"
             android:layout_below="@id/txtSignEmail"
             android:singleLine="true"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:inputType="textPassword"/>
+
+        <EditText
+            android:id="@+id/txtConfirmSignPassword"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/confirmPasswordHint"
+            android:textAlignment="center"
+            android:layout_below="@id/txtSignPassword"
+            android:singleLine="true"
+            android:layout_marginBottom="10dp"
+            android:inputType="textPassword"/>
 
         <Button
             android:id="@+id/btnSignUpNow"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtSignPassword"
+            android:layout_below="@id/txtConfirmSignPassword"
             android:gravity="center"
             android:text="@string/btnSignUpNow"
             android:layout_marginTop="20dp"/>

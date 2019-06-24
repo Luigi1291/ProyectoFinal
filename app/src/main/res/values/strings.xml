@@ -6,7 +6,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="abrir_sitio">Abrir Sitio Web</string>
-    <string name="Fragment11">Fragment</string>
+    <string name="option_SignOut">Cerrar Sesión</string>
 
     <string name="menu_home">Tomar Foto</string>
     <string name="menu_gallery">Gallery</string>
@@ -24,6 +24,7 @@
     <!-- Login Values -->
     <string name="userNameHint">Nombre de Usuario</string>
     <string name="passwordHint">Contraseña</string>
+    <string name="confirmPasswordHint">Confirmar Contraseña</string>
     <string name="emailHint">Correo</string>
     <string name="btnLoginText">Ingresar</string>
     <string name="btnSignUpText">Registrarse</string>

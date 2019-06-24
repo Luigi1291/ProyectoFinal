@@ -45,7 +45,7 @@ public class FragmentSignUp extends Fragment {
         btnSignUpNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText txtEmail = view.findViewById(R.id.txtSignEmail);
+                final EditText txtEmail = view.findViewById(R.id.txtSignEmail);
                 EditText txtPassword = view.findViewById(R.id.txtSignPassword);
 
                 String email = txtEmail.getText().toString();
@@ -73,15 +73,30 @@ public class FragmentSignUp extends Fragment {
     }
     private boolean validateFields(String email, String password){
         boolean isOk = true;
+
         if(email.isEmpty()){
             Toast.makeText(getActivity().getApplicationContext(), "Debe ingresar un correo.", Toast.LENGTH_SHORT).show();
             isOk = false;
         }
-        else
-            if(password.isEmpty()){
-                Toast.makeText(getActivity().getApplicationContext(), "Debe ingresar una contraseña.", Toast.LENGTH_SHORT).show();
+        else{
+            String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+            if(!email.matches(regex)){
+                Toast.makeText(getActivity().getApplicationContext(), "Formato de correo inválido.", Toast.LENGTH_SHORT).show();
                 isOk = false;
             }
+            else{
+                if(password.isEmpty()){
+                    Toast.makeText(getActivity().getApplicationContext(), "Debe ingresar una contraseña.", Toast.LENGTH_SHORT).show();
+                    isOk = false;
+                }
+                else {
+                    if(password.length() < 6){
+                        Toast.makeText(getActivity().getApplicationContext(), "La contraseña debe contener al menos 6 cáracteres.", Toast.LENGTH_SHORT).show();
+                        isOk = false;
+                    }
+                }
+            }
+        }
 
         return isOk;
     }

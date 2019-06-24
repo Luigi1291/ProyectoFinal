@@ -1,11 +1,8 @@
 package com.lusberc.billwallet;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -35,19 +33,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
-import com.google.firebase.ml.vision.text.RecognizedLanguage;
-import com.google.firestore.v1.WriteResult;
+import com.lusberc.billwallet.LogIn.FragmentLogin;
+import com.lusberc.billwallet.LogIn.FragmentSignUp;
+import com.lusberc.billwallet.LogIn.LoginActivity;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -57,8 +54,8 @@ public class MainActivity extends AppCompatActivity
     private Uri imageUri;
     private static final int TAKE_PICTURE = 1;
     private FirebaseAuth mAuth;
-    FirebaseFirestore db;
-    FirebaseUser currentUser;
+    private FirebaseFirestore db;
+    private FirebaseUser currentUser;
     private static final String TAG = "MAIN ACTIVITY::";
 
     @Override
@@ -207,7 +204,22 @@ public class MainActivity extends AppCompatActivity
             startActivity(browserIntent);
             return true;
         }
-
+        else
+            if(id == R.id.action_SignOut){
+                try {
+                    //Cerrar Sesión
+                    mAuth.signOut();
+                    //Abrir login activity
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    this.startActivity(intent);
+                    //Cerrar aplicación
+                    this.finish();
+                    Toast.makeText(getApplicationContext(), "Sesión Cerrada", LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Error al cerrar su sesión.", LENGTH_LONG).show();
+                    Log.d(TAG, e.getMessage());
+                }
+            }
         return super.onOptionsItemSelected(item);
     }
 

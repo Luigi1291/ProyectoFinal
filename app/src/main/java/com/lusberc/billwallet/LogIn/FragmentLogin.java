@@ -2,17 +2,26 @@ package com.lusberc.billwallet.LogIn;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.lusberc.billwallet.MainActivity;
 import com.lusberc.billwallet.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class FragmentLogin extends Fragment {
 
@@ -45,13 +54,34 @@ public class FragmentLogin extends Fragment {
 
     private void setupUI(View view){
         final Button btnLogin = view.findViewById(R.id.btnLogin);
+        final EditText txtUser = view.findViewById(R.id.txtLoginEmail);
+        final EditText txtPassw = view.findViewById(R.id.txtLoginPassword);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                btnLogin.setEnabled(false);
-                btnLogin.setClickable(false);
-                startApp(view);
+            public void onClick(final View view) {
+                if(txtUser.getText().toString().isEmpty() || txtPassw.getText().toString().isEmpty()){
+                    Toast.makeText(getActivity().getApplicationContext(), "Debe ingresar sus credenciales.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    mAuth.signInWithEmailAndPassword(txtUser.getText().toString(), txtPassw.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d(TAG, "signInWithEmail:success");
+                                    startApp(view);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                    Toast.makeText(getActivity().getApplicationContext(), "Autenticación fallida.",
+                                            Toast.LENGTH_SHORT).show();
+                                    startApp(null);
+                                }
+                            }
+                        });
+                }
             }
         });
 
@@ -60,9 +90,6 @@ public class FragmentLogin extends Fragment {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnSignUp.setEnabled(false);
-                btnSignUp.setClickable(false);
-
                 //Llamar fragment SIGNUP sin sobreponerse
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -72,11 +99,14 @@ public class FragmentLogin extends Fragment {
             }
         });
     }
+
     //Launch application after succesfull SignIn
     private void startApp(View view){
-        Intent intent = new Intent(view.getContext(), MainActivity.class);
-        //intent.putExtra("RESULT_VALUE", resultado.toString());
-        getActivity().startActivity(intent);
-        getActivity().finish();
+        if(view != null) {
+            Intent intent = new Intent(view.getContext(), MainActivity.class);
+            //intent.putExtra("RESULT_VALUE", resultado.toString());
+            getActivity().startActivity(intent);
+            getActivity().finish();
+        }
     }
 }

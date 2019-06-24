@@ -5,11 +5,12 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/abrir_sitio"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+        android:visible="false"/>
 
     <item
-        android:id="@+id/fragment1"
+        android:id="@+id/action_SignOut"
         android:orderInCategory="100"
-        android:title="@string/Fragment11"
+        android:title="@string/option_SignOut"
         app:showAsAction="never" />
 </menu>
