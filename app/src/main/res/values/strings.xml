@@ -29,6 +29,8 @@
     <string name="btnLoginText">Ingresar</string>
     <string name="btnSignUpText">Registrarse</string>
     <string name="btnSignUpNow">Registrar Usuario</string>
+    <string name="btnLoginFaceB">Ingresa con Facebook</string>
+    <string name="btnLoginGoogle">Ingresa con Google</string>
 
     <!-- Validations -->
     <string name="invalid_email">Correo Inválido</string>
