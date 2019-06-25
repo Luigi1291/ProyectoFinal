@@ -2,10 +2,14 @@ package com.lusberc.billwallet.LogIn;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +23,8 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.Login;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -39,6 +45,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.lusberc.billwallet.Utilities.GeneralValidations;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Array;
+import java.util.Arrays;
+
 import static android.support.constraint.Constraints.TAG;
 
 public class FragmentLogin extends Fragment {
@@ -54,6 +65,7 @@ public class FragmentLogin extends Fragment {
         super.onCreate(savedInstanceState);
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        //keyHashFacebook();
     }
 
     @Override
@@ -160,29 +172,40 @@ public class FragmentLogin extends Fragment {
     }
 
     private void FacebookConfiguration(final View view){
-        // HASH KEY
-        // Descargar OpenSSL from https://code.google.com/archive/p/openssl-for-windows/downloads
-        // keytool -exportcert -alias androiddebugkey -keystore "C:\Users\LUIS\.android\debug.keystore" | "C:\Data\OpenSSL\bin\openssl" sha1 -binary | "C:\Data\OpenSSL\bin\openssl" base64
+        // HASH KEY method =
 
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
-        LoginButton loginButton = view.findViewById(R.id.btnFacebook);
-        loginButton.setReadPermissions("email", "public_profile");
-        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                handleFacebookAccessToken(loginResult.getAccessToken(), view);
-            }
 
-            @Override
-            public void onCancel() {
-                Log.d(TAG, "facebook:onCancel");
-            }
+        Button loginButton = view.findViewById(R.id.btnFacebook);
 
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onError(FacebookException error) {
-                Log.d(TAG, "facebook:onError", error);
+            public void onClick(View v) {
+                dialog.setMessage(getString(R.string.loadingPage));
+                dialog.setCancelable(false);
+                dialog.show();
+
+                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("email", "public_profile"));
+                LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                        handleFacebookAccessToken(loginResult.getAccessToken(), view);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d(TAG, "facebook:onCancel");
+                        dialog.hide();
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.d(TAG, "facebook:onError", error);
+                        dialog.hide();
+                    }
+                });
             }
         });
     }
@@ -202,7 +225,7 @@ public class FragmentLogin extends Fragment {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(getActivity().getApplicationContext(), "Autenticación Fallida.",
+                            Toast.makeText(getActivity().getApplicationContext(), "Ya existe otra cuenta ligada a éste correo.",
                                     Toast.LENGTH_SHORT).show();
                             startApp(null);
                         }
@@ -217,6 +240,8 @@ public class FragmentLogin extends Fragment {
             getActivity().startActivity(intent);
             getActivity().finish();
         }
+        //Desloguear facebook ya que FireBase reconoce el usuario
+        LoginManager.getInstance().logOut();
         dialog.hide();
     }
 
@@ -265,5 +290,22 @@ public class FragmentLogin extends Fragment {
                         }
                     }
                 });
+    }
+    //Check current KeyHash for facebook developers configuration site
+    private void keyHashFacebook(){
+        try {
+            PackageInfo info = getActivity().getPackageManager().getPackageInfo(
+                    "com.lusberc.billwallet",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
     }
 }
