@@ -31,6 +31,7 @@
     <string name="btnSignUpNow">Registrar Usuario</string>
     <string name="btnLoginFaceB">Ingresa con Facebook</string>
     <string name="btnLoginGoogle">Ingresa con Google</string>
+
     <string name="btnTomarFoto">Tomar Foto</string>
     <string name="btnSubirFoto">Subir desde Galeria</string>
 
@@ -42,4 +43,7 @@
     <string name="invalid_confirmPassw">Contraseña Incorrecta</string>
 
     <string name="loadingPage">Cargando...</string>
+
+    <!-- Facebook Login -->
+    <string name="facebook_app_id">2064613807179614</string> <string name="fb_login_protocol_scheme">fb2064613807179614</string>
 </resources>
