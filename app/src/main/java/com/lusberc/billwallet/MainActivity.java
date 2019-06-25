@@ -47,12 +47,14 @@ import java.io.File;
 import java.io.IOException;
 
 import static android.widget.Toast.LENGTH_LONG;
+import static com.lusberc.billwallet.Utilities.GeneralValidations.extractBillDate;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Uri imageUri;
     private static final int TAKE_PICTURE = 1;
+    private static final int PICK_IMAGE = 2;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity
                     if (readPermissionCode == PackageManager.PERMISSION_DENIED || writePermissionCode == PackageManager.PERMISSION_DENIED) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
                         }
                     } else {
 
@@ -156,18 +158,52 @@ public class MainActivity extends AppCompatActivity
                                     new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            showToastMsj("Failed to process text from image");
+                                            showToastMsj("Fallo al procesar la imagen");
                                         }
                                     });
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
-                    showToastMsj("Failed to load");
+                    showToastMsj("Fallo al cargar la imagen");
                     Log.e("Camera", e.toString());
                     Log.e("Camera", e.getStackTrace().toString());
                 }
                     }
             }
+            break;
+            case PICK_IMAGE:
+                    Uri selectedImage = data.getData();
+
+                    try{
+                        FirebaseVisionImage image;
+                        image = FirebaseVisionImage.fromFilePath(getApplicationContext(), selectedImage);
+                        FirebaseVisionTextRecognizer textRecognizer = FirebaseVision.getInstance()
+                                .getOnDeviceTextRecognizer();
+                        textRecognizer.processImage(image)
+                                .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
+                                    @Override
+                                    public void onSuccess(FirebaseVisionText result) {
+
+                                        String resultText = result.getText();
+                                        addImageTextToFirebase(resultText);
+                                    }
+                                })
+                                .addOnFailureListener(
+                                        new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                showToastMsj("Fallo al procesar la imagen");
+                                            }
+                                        });
+                    }catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        showToastMsj("Fallo al cargar la imagen");
+                        Log.e("Camera", e.toString());
+                        Log.e("Camera", e.getStackTrace().toString());
+                    }
+
+
         }
     }
 
@@ -234,17 +270,31 @@ public class MainActivity extends AppCompatActivity
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                     == PackageManager.PERMISSION_DENIED){
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CAMERA},
+                        new String[]{Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         0);
             }
             else{
-                //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 takePhoto(this.getCurrentFocus());
-                //startActivity(intent);
             }
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+            //TODO: Crear lista de imagenes con vista previa por usuario.
+
+        } else if (id == R.id.nav_upload) {
+            //Revisar permisos de escritura y lectura
+            int writePermissionCode = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            int readPermissionCode = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+            if (readPermissionCode == PackageManager.PERMISSION_DENIED || writePermissionCode == PackageManager.PERMISSION_DENIED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                }
+            }
+            else{
+                uploadPhoto(this.getCurrentFocus());
+            }
+
 
         } else if (id == R.id.nav_tools) {
 
@@ -270,6 +320,18 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(intent, TAKE_PICTURE);
     }
 
+    public void uploadPhoto(View view) {
+        //Create an Intent with action as ACTION_PICK
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        // Sets the type as image/*. This ensures only components of type image are selected
+        intent.setType("image/*");
+        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        // Launching the Intent
+        startActivityForResult(intent, PICK_IMAGE);
+    }
+
     public void showToastMsj(String message){
         Toast.makeText(getApplicationContext(), message,
                 LENGTH_LONG).show();
@@ -281,7 +343,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void addImageTextToFirebase(String imageText){
+        extractBillDate(imageText);
+        //TODO: Crear objeto y guardarlo en firebase, guardar imagen usando el storage de firebase
 
+
+        /*
         db.collection("textBills")
                 .document(currentUser.getUid())
                 .set(imageText)
@@ -306,6 +372,7 @@ public class MainActivity extends AppCompatActivity
                         mySnackbar.show();
                     }
                 });
+                */
     }
 
 

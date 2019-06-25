@@ -2,15 +2,15 @@
     <string name="app_name">Bill Wallet</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Bill Wallet</string>
+    <string name="nav_header_subtitle">lusberc@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="abrir_sitio">Abrir Sitio Web</string>
     <string name="option_SignOut">Cerrar Sesión</string>
 
     <string name="menu_home">Tomar Foto</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_gallery">Listado de Facturas</string>
+    <string name="menu_upload">Subir desde Galeria</string>
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
@@ -31,6 +31,8 @@
     <string name="btnSignUpNow">Registrar Usuario</string>
     <string name="btnLoginFaceB">Ingresa con Facebook</string>
     <string name="btnLoginGoogle">Ingresa con Google</string>
+    <string name="btnTomarFoto">Tomar Foto</string>
+    <string name="btnSubirFoto">Subir desde Galeria</string>
 
     <!-- Validations -->
     <string name="invalid_email">Correo Inválido</string>

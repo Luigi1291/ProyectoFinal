@@ -14,6 +14,9 @@ import com.lusberc.billwallet.R;
 
 public class Fragment1 extends Fragment {
 
+    //TODO: crear en esta vista campos para fecha, monto, descripcion
+    // y demas funcionalidad para incluir ademas de la imagen
+
     final private String TAG = "Fragment 1";
 
     public Fragment1() {
