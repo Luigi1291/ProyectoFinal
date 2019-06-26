@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity
                                 public void onSuccess(FirebaseVisionText result) {
 
                                     String resultText = result.getText();
-                                    showTextOnFragment(resultText);
                                     addImageTextToFirebase(resultText);
                                     /*
                                     If the text recognition operation succeeds, a FirebaseVisionText object will be passed to the success listener.
@@ -270,9 +269,8 @@ public class MainActivity extends AppCompatActivity
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                     == PackageManager.PERMISSION_DENIED){
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        0);
+                        new String[]{Manifest.permission.CAMERA},
+                        TAKE_PICTURE);
             }
             else{
                 takePhoto(this.getCurrentFocus());
@@ -294,7 +292,6 @@ public class MainActivity extends AppCompatActivity
             else{
                 uploadPhoto(this.getCurrentFocus());
             }
-
 
         } else if (id == R.id.nav_tools) {
 
@@ -340,6 +337,45 @@ public class MainActivity extends AppCompatActivity
     private void showTextOnFragment(String text){
         TextView txtRes = this.findViewById(R.id.txtResult);
         txtRes.setText(text);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case TAKE_PICTURE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    takePhoto(this.getCurrentFocus());
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+            case PICK_IMAGE:
+            {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0){
+                 if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+                    uploadPhoto(this.getCurrentFocus());
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+                }
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 
     private void addImageTextToFirebase(String imageText){
