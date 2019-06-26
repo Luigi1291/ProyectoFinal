@@ -46,4 +46,13 @@
 
     <!-- Facebook Login -->
     <string name="facebook_app_id">2064613807179614</string> <string name="fb_login_protocol_scheme">fb2064613807179614</string>
+
+    <!-- Google Maps -->
+    <string name="google_maps_key">AIzaSyCOXA1f02JZJl-H77OVUOCgu_9f9PTtI-U</string>
+    <string name="title_activity_maps">Detalles Ubicacion Actual</string>
+    <string name="default_info_title">Ubicacion Actual</string>
+    <string name="default_info_snippet">Ubicaciones no encontradas, el permiso de localización se encuentra desactivado.</string>
+    <string name="option_get_place">Obtener Ubicacion</string>
+    <string name="pick_place">Seleccionar Ubicacion</string>
+
 </resources>

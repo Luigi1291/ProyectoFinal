@@ -6,9 +6,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,14 +16,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.login.Login;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -47,10 +46,7 @@ import com.lusberc.billwallet.Utilities.GeneralValidations;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Array;
 import java.util.Arrays;
-
-import static android.support.constraint.Constraints.TAG;
 
 public class FragmentLogin extends Fragment {
 
@@ -58,7 +54,7 @@ public class FragmentLogin extends Fragment {
     private CallbackManager mCallbackManager;
     static final int GOOGLE_SIGN = 123;
     GoogleSignInClient mGoogleSignIn;
-
+    private String TAG = "FragmentLogin";
     ProgressDialog dialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {

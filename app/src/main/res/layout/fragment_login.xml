@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     tools:context=".LogIn.LoginActivity">
 
-    <android.support.v7.widget.AppCompatImageView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:src="@drawable/finantix_wallet512"
