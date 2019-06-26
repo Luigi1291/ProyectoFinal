@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-        mStorageRef = FirebaseStorage.getInstance().getReference();
         currentUser = mAuth.getCurrentUser();
+        mStorageRef = FirebaseStorage.getInstance().getReference(currentUser.getUid());
         db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .build();
@@ -394,7 +394,7 @@ public class MainActivity extends AppCompatActivity
         StorageMetadata metadata = new StorageMetadata.Builder()
                 .setContentType("image/jpg")
                 .build();
-        final StorageReference riversRef = mStorageRef.child("images/"+ currentUser.getUid()+ file.getLastPathSegment());
+        final StorageReference riversRef = mStorageRef.child("images/"+ file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file, metadata);
 
 // Register observers to listen for when the download is done or if it fails
