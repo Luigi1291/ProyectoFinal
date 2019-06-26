@@ -9,7 +9,7 @@ public class Bill {
     private int Monto;
     private long x;
     private long y;
-    private Date fechaVencimiento;
+    private String fechaVencimiento;
 
 
     public String getImageText() {
@@ -44,11 +44,11 @@ public class Bill {
         this.y = y;
     }
 
-    public Date getFechaVencimiento() {
+    public String getFechaVencimiento() {
         return fechaVencimiento;
     }
 
-    public void setFechaVencimiento(Date fechaVencimiento) {
+    public void setFechaVencimiento(String fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 

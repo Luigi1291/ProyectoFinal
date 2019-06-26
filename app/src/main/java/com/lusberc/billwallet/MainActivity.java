@@ -10,21 +10,18 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.View;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,12 +36,17 @@ import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
-import com.lusberc.billwallet.LogIn.FragmentLogin;
-import com.lusberc.billwallet.LogIn.FragmentSignUp;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.lusberc.billwallet.LogIn.LoginActivity;
+import com.lusberc.billwallet.Models.Bill;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static android.widget.Toast.LENGTH_LONG;
 import static com.lusberc.billwallet.Utilities.GeneralValidations.extractBillDate;
@@ -56,8 +58,10 @@ public class MainActivity extends AppCompatActivity
     private static final int TAKE_PICTURE = 1;
     private static final int PICK_IMAGE = 2;
     private FirebaseAuth mAuth;
+    private StorageReference mStorageRef;
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
+    private Bill bill;
     private static final String TAG = "MAIN ACTIVITY::";
 
     @Override
@@ -65,6 +69,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         currentUser = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
@@ -107,6 +112,7 @@ public class MainActivity extends AppCompatActivity
                     } else {
 
                     try {
+                        bill = new Bill();
                         FirebaseVisionImage image;
                         image = FirebaseVisionImage.fromFilePath(getApplicationContext(), selectedImage);
                         FirebaseVisionTextRecognizer textRecognizer = FirebaseVision.getInstance()
@@ -116,8 +122,9 @@ public class MainActivity extends AppCompatActivity
                                 @Override
                                 public void onSuccess(FirebaseVisionText result) {
 
-                                    String resultText = result.getText();
-                                    addImageTextToFirebase(resultText);
+                                    bill.setImageText(result.getText());
+                                    addBillToFirebase();
+
                                     /*
                                     If the text recognition operation succeeds, a FirebaseVisionText object will be passed to the success listener.
                                     A FirebaseVisionText object contains the full text recognized in the image and zero or more TextBlock objects.
@@ -174,6 +181,7 @@ public class MainActivity extends AppCompatActivity
                     Uri selectedImage = data.getData();
 
                     try{
+                        bill = new Bill();
                         FirebaseVisionImage image;
                         image = FirebaseVisionImage.fromFilePath(getApplicationContext(), selectedImage);
                         FirebaseVisionTextRecognizer textRecognizer = FirebaseVision.getInstance()
@@ -183,8 +191,8 @@ public class MainActivity extends AppCompatActivity
                                     @Override
                                     public void onSuccess(FirebaseVisionText result) {
 
-                                        String resultText = result.getText();
-                                        addImageTextToFirebase(resultText);
+                                        bill.setImageText(result.getText());
+                                        addBillToFirebase();
                                     }
                                 })
                                 .addOnFailureListener(
@@ -308,7 +316,10 @@ public class MainActivity extends AppCompatActivity
 
     public void takePhoto(View view) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date resultdate = new Date(System.currentTimeMillis());
+        bill.setFechaVencimiento(formatter.format(resultdate));
+        File photo = new File(Environment.getExternalStorageDirectory(),  bill.getFechaVencimiento()+"Bill.jpg");
         intent.putExtra(MediaStore.EXTRA_OUTPUT,
                 Uri.fromFile(photo));
         imageUri = Uri.fromFile(photo);
@@ -378,9 +389,37 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void addImageTextToFirebase(String imageText){
-        extractBillDate(imageText);
+    private void addImageToFirebaseStorage(){
+        Uri file = imageUri;
+        StorageMetadata metadata = new StorageMetadata.Builder()
+                .setContentType("image/jpg")
+                .build();
+        final StorageReference riversRef = mStorageRef.child("images/"+ currentUser.getUid()+ file.getLastPathSegment());
+        UploadTask uploadTask = riversRef.putFile(file, metadata);
+
+// Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                showToastMsj("Falló al intentar cargar la imagen");
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+                showToastMsj(riversRef.getDownloadUrl().toString());
+            }
+        });
+    }
+
+    private void addBillToFirebase(){
+        String fechaVencimiento =  extractBillDate(bill.getImageText());
+        if(!fechaVencimiento.isEmpty())bill.setFechaVencimiento(fechaVencimiento);
+
+
         //TODO: Crear objeto y guardarlo en firebase, guardar imagen usando el storage de firebase
+
 
 
         /*

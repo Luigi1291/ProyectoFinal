@@ -56,6 +56,8 @@ android/support/annotation/UiThread.class
 android/support/annotation/VisibleForTesting.class
 android/support/annotation/WorkerThread.class
 android/support/annotation/XmlRes.class
+android/support/customtabs/CustomTabsService$Relation.class
+android/support/customtabs/CustomTabsService$Result.class
 android/support/design/bottomappbar/BottomAppBar$FabAlignmentMode.class
 android/support/design/bottomnavigation/LabelVisibilityMode.class
 android/support/design/button/MaterialButton$IconGravity.class
@@ -151,6 +153,8 @@ androidx/versionedparcelable/NonParcelField.class
 androidx/versionedparcelable/ParcelField.class
 androidx/versionedparcelable/VersionedParcelize.class
 com/google/android/gms/auth/api/accounttransfer/AuthenticatorTransferCompletionStatus.class
+com/google/android/gms/auth/api/credentials/Credential.class
+com/google/android/gms/auth/api/credentials/CredentialPickerConfig$Prompt.class
 com/google/android/gms/auth/api/proxy/ProxyApi$SpatulaHeaderResult.class
 com/google/android/gms/common/GoogleSignatureVerifier.class
 com/google/android/gms/common/SignInButton$ButtonSize.class
@@ -161,7 +165,9 @@ com/google/android/gms/common/annotation/KeepForSdkWithMembers.class
 com/google/android/gms/common/annotation/KeepName.class
 com/google/android/gms/common/api/Result.class
 com/google/android/gms/common/internal/HideFirstParty.class
+com/google/android/gms/common/internal/ReflectedParcelable.class
 com/google/android/gms/common/internal/ShowFirstParty.class
+com/google/android/gms/common/internal/safeparcel/AbstractSafeParcelable.class
 com/google/android/gms/common/internal/safeparcel/SafeParcelable$Class.class
 com/google/android/gms/common/internal/safeparcel/SafeParcelable$Constructor.class
 com/google/android/gms/common/internal/safeparcel/SafeParcelable$Field.class
@@ -169,6 +175,7 @@ com/google/android/gms/common/internal/safeparcel/SafeParcelable$Indicator.class
 com/google/android/gms/common/internal/safeparcel/SafeParcelable$Param.class
 com/google/android/gms/common/internal/safeparcel/SafeParcelable$Reserved.class
 com/google/android/gms/common/internal/safeparcel/SafeParcelable$VersionField.class
+com/google/android/gms/common/internal/safeparcel/SafeParcelable.class
 com/google/android/gms/common/util/DynamiteApi.class
 com/google/android/gms/common/util/RetainForClient.class
 com/google/android/gms/common/util/VisibleForTesting.class
@@ -259,6 +266,7 @@ com/google/firebase/ml/vision/text/FirebaseVisionCloudTextRecognizerOptions$Clou
 com/google/firebase/ml/vision/text/FirebaseVisionTextRecognizer$RecognizerType.class
 com/google/firebase/platforminfo/AutoValue_LibraryVersion.class
 com/google/firebase/platforminfo/LibraryVersion.class
+com/google/firebase/storage/StorageException$ErrorCode.class
 com/google/gson/annotations/Expose.class
 com/google/gson/annotations/JsonAdapter.class
 com/google/gson/annotations/SerializedName.class
