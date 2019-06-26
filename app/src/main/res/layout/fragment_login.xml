@@ -4,65 +4,90 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context=".LogIn.LoginActivity"
-    android:gravity="center">
+    tools:context=".LogIn.LoginActivity">
 
-    <EditText
-        android:id="@+id/txtLoginEmail"
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:src="@drawable/finantix_wallet512"
+        android:layout_marginTop="20dp"/>
+
+    <RelativeLayout
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="@string/emailHint"
-        android:textAlignment="center"
-        android:singleLine="true"
-        android:layout_marginBottom="10dp"/>
+        android:id="@+id/LayoutTextContainer"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="80dp">
 
-    <EditText
-        android:id="@+id/txtLoginPassword"
+        <EditText
+            android:id="@+id/txtLoginEmail"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/emailHint"
+            android:textAlignment="center"
+            android:singleLine="true"
+            android:layout_marginBottom="10dp"
+            android:background="@color/common_google_signin_btn_text_dark"/>
+
+        <EditText
+            android:id="@+id/txtLoginPassword"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/passwordHint"
+            android:textAlignment="center"
+            android:layout_below="@id/txtLoginEmail"
+            android:singleLine="true"
+            android:layout_marginBottom="40dp"
+            android:inputType="textPassword"
+            android:background="@color/common_google_signin_btn_text_dark"/>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="@string/passwordHint"
-        android:textAlignment="center"
-        android:layout_below="@id/txtLoginEmail"
-        android:singleLine="true"
-        android:layout_marginBottom="40dp"
-        android:inputType="textPassword"/>
+        android:id="@+id/LayoutButtonContainer"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/LayoutTextContainer">
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtLoginPassword"
-        android:layout_toRightOf="@id/btnSignUp"
-        android:gravity="center"
-        android:text="@string/btnLoginText" />
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="@string/btnLoginText"
+            android:background="@color/colorAppBackground"/>
+
+        <Button
+            android:id="@+id/btnFacebook"
+            android:background="@color/colorFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:text="@string/btnLoginFaceB"
+            android:textSize="15dp"
+            android:textColor="@color/colorAccent"
+            android:layout_below="@id/btnLogin"
+            android:layout_marginTop="20dp"/>
+
+        <com.google.android.gms.common.SignInButton
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/btnGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:buttonSize="wide"
+            app:colorScheme="dark"
+            android:layout_below="@id/btnFacebook"
+            android:layout_marginTop="20dp"/>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/btnSignUp"
-        android:layout_width="120dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtLoginPassword"
+        android:layout_below="@id/LayoutButtonContainer"
         android:gravity="center"
-        android:text="@string/btnSignUpText" />
-
-    <Button
-        android:id="@+id/btnFacebook"
-        android:background="#3B5998"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:textAllCaps="false"
-        android:text="@string/btnLoginFaceB"
-        android:textSize="15dp"
-        android:textColor="#ffffff"
-        android:layout_below="@id/btnSignUp"
-        android:layout_marginTop="20dp"/>
-
-    <com.google.android.gms.common.SignInButton
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/btnGoogle"
-        android:layout_width="255dp"
-        android:layout_height="40dp"
-        app:buttonSize="wide"
-        app:colorScheme="dark"
-        android:layout_below="@id/btnFacebook"
-        android:layout_marginTop="20dp"/>
+        android:text="@string/btnSignUpText"
+        android:background="@color/colorAppBackground"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="50dp"/>
 </RelativeLayout>
