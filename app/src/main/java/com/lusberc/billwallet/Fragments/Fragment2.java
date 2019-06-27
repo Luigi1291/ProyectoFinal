@@ -37,7 +37,7 @@ public class Fragment2 extends Fragment {
     }
 
     private void setupUI(View view) {
-        FloatingActionButton btn_next = view.findViewById(R.id.btn_fgmt2_next);
+        /*FloatingActionButton btn_next = view.findViewById(R.id.btn_fgmt2_next);
         final TextInputEditText editText = view.findViewById(R.id.txt_message);
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +49,7 @@ public class Fragment2 extends Fragment {
                 action.setMessage(content);
                 Navigation.findNavController(v).navigate(action);
             }
-        });
+        });*/
     }
 
 }

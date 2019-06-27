@@ -2,6 +2,7 @@ package com.lusberc.billwallet.Models;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
 
 public class MyApplication extends Application {
 

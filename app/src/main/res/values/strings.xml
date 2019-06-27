@@ -34,6 +34,7 @@
 
     <string name="btnTomarFoto">Tomar Foto</string>
     <string name="btnSubirFoto">Subir desde Galeria</string>
+    <string name="btnConfirmar">Guardar</string>
 
     <!-- Validations -->
     <string name="invalid_email">Correo Inválido</string>
