@@ -25,4 +25,6 @@ public class MyApplication extends Application {
     public void set_mBill(Bill _mBill) {
         this._mBill = _mBill;
     }
+
+    //TEST
 }
