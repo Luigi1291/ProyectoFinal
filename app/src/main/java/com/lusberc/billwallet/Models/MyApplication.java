@@ -25,4 +25,19 @@ public class MyApplication extends Application {
     public void set_mBill(Bill _mBill) {
         this._mBill = _mBill;
     }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+    }
 }

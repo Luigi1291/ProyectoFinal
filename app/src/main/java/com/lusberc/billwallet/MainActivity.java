@@ -368,6 +368,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void addImageToFirebaseStorage(){
+        /*TODO:
+            Extraer Monto total
+            guardar imagen usando el storage de firebase
+         */
         Uri file = bill.getImageUri();
         StorageMetadata metadata = new StorageMetadata.Builder()
                 .setContentType("image/jpg")
