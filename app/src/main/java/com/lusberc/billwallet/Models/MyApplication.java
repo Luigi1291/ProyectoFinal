@@ -26,6 +26,8 @@ public class MyApplication extends Application {
         this._mBill = _mBill;
     }
 
+    //TEST
+
     @Override
     public void onTerminate() {
         super.onTerminate();
