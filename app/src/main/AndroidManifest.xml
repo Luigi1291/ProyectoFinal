@@ -35,6 +35,12 @@
         </activity>
 
         <activity
+            android:name="com.lusberc.billwallet.Maps.MapsActivityCurrentPlace"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
             android:name="com.lusberc.billwallet.LogIn.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">

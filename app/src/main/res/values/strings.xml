@@ -59,5 +59,6 @@
     <string name="default_info_snippet">Ubicaciones no encontradas, el permiso de localización se encuentra desactivado.</string>
     <string name="option_get_place">Obtener Ubicacion</string>
     <string name="pick_place">Seleccionar Ubicacion</string>
+    <string name="inputSearchHint">Ingrese Direccíon o Ciudad</string>
 
 </resources>

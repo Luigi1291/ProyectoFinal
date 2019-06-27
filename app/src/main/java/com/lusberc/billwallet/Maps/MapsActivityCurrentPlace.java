@@ -2,12 +2,17 @@ package com.lusberc.billwallet.Maps;
 
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -37,12 +42,17 @@ import com.google.android.gms.tasks.Task;
 
 import com.lusberc.billwallet.R;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapsActivityCurrentPlace extends AppCompatActivity
-        implements OnMapReadyCallback {
+        implements
+        OnMapReadyCallback {
     private static final String TAG = MapsActivityCurrentPlace.class.getSimpleName();
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
-
+    private EditText mSearchText;
     // The entry points to the Places API.
     private GeoDataClient mGeoDataClient;
     private PlaceDetectionClient mPlaceDetectionClient;
@@ -72,6 +82,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
     private String[] mLikelyPlaceAttributions;
     private LatLng[] mLikelyPlaceLatLngs;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +96,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_maps);
 
+        mSearchText = findViewById(R.id.txtSearchInput);
+
         // Construct a GeoDataClient.
         mGeoDataClient = Places.getGeoDataClient(this, null);
 
@@ -97,7 +110,38 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
         // Build the map.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+
+        mapFragment.getMapAsync(MapsActivityCurrentPlace.this);
+    }
+
+    private void setupUI(){
+        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || event.getAction() == KeyEvent.ACTION_DOWN
+                        || event.getAction() == KeyEvent.KEYCODE_ENTER){
+                    geoLocate();
+                }
+                return false;
+            }
+        });
+    }
+
+    private void geoLocate(){
+        String searchString = mSearchText.getText().toString();
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> list = new ArrayList<>();
+        try{
+            list = geocoder.getFromLocationName(searchString,1 );
+        } catch (IOException e){
+            Log.e(TAG, "geoLocate: IOException " + e.getMessage());
+        }
+        if(list.size() > 0){
+            Address address = list.get(0);
+            mSearchText.setText(address.toString());
+        }
 
     }
 
@@ -142,34 +186,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
      * This callback is triggered when the map is ready to be used.
      */
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady (GoogleMap map) {
         mMap = map;
-
-        // Use a custom info window adapter to handle multiple lines of text in the
-        // info window contents.
-        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
-            @Override
-            // Return null here, so that getInfoContents() is called next.
-            public View getInfoWindow(Marker arg0) {
-                return null;
-            }
-
-            @Override
-            public View getInfoContents(Marker marker) {
-                // Inflate the layouts for the info window, title and snippet.
-                View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents,
-                        (FrameLayout) findViewById(R.id.map), false);
-
-                TextView title = ((TextView) infoWindow.findViewById(R.id.title));
-                title.setText(marker.getTitle());
-
-                TextView snippet = ((TextView) infoWindow.findViewById(R.id.snippet));
-                snippet.setText(marker.getSnippet());
-
-                return infoWindow;
-            }
-        });
 
         // Prompt the user for permission.
         getLocationPermission();
@@ -179,6 +197,9 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
 
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
+
+        //Display search address
+        setupUI();
     }
 
     /**
@@ -380,7 +401,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
         try {
             if (mLocationPermissionGranted) {
                 mMap.setMyLocationEnabled(true);
-                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                // Dont need relocate my position
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
             } else {
                 mMap.setMyLocationEnabled(false);
                 mMap.getUiSettings().setMyLocationButtonEnabled(false);

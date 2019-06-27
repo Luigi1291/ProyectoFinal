@@ -39,6 +39,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.lusberc.billwallet.MainActivity;
+import com.lusberc.billwallet.Maps.MapsActivityCurrentPlace;
 import com.lusberc.billwallet.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -240,7 +241,10 @@ public class FragmentLogin extends Fragment {
     //Launch application after succesfull SignIn
     private void startApp(View view){
         if(view != null) {
-            Intent intent = new Intent(view.getContext(), MainActivity.class);
+
+            //Maps
+            // Intent intent = new Intent(view.getContext(), MainActivity.class);
+            Intent intent = new Intent(view.getContext(), MapsActivityCurrentPlace.class);
             //intent.putExtra("RESULT_VALUE", resultado.toString());
             getActivity().startActivity(intent);
             getActivity().finish();
