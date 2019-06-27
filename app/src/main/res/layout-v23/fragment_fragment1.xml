@@ -8,33 +8,12 @@
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-    <EditText
+    <TextView
         android:id="@+id/txtResult"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:layout_marginTop="100dp"
         android:gravity="center"
-        android:hint="@string/hint_comercio"
-        android:textSize="24sp"/>
-
-    <EditText
-        android:id="@+id/txtFechaCompra"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_below="@id/txtResult"
-        android:gravity="center"
-        android:hint="@string/hint_fecha"
-        android:textSize="24sp"/>
-
-    <EditText
-        android:id="@+id/txtMontoTotal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_below="@id/txtFechaCompra"
-        android:gravity="center"
-        android:hint="@string/hint_monto"
         android:textSize="24sp"/>
 
     <Button
@@ -43,7 +22,7 @@
         android:layout_marginRight="100dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtMontoTotal"
+        android:layout_below="@id/txtResult"
         android:layout_centerHorizontal="true"
         android:text="@string/btnTomarFoto"
         android:background="@color/colorAppBackground"

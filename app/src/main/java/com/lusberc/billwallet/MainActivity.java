@@ -403,13 +403,9 @@ public class MainActivity extends AppCompatActivity
             guardar imagen usando el storage de firebase
          */
 
-
+        this.getApplicationContext();
 
 /*
-
-
-
-
         db.collection("textBills")
                 .document(bill.getUserID())
                 .set(bill)
