@@ -41,6 +41,7 @@
         <action
             android:id="@+id/fragment2to3"
             app:destination="@id/fgmt3"/>
+        <argument android:name="bill" />
 
     </fragment>
 
@@ -57,7 +58,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:navGraph="@navigation/nav_graph" >
-
+        <action
+            android:id="@+id/fragment3to1"
+            app:destination="@id/fgmt1"/>
         <argument
             android:name="message"
             android:defaultValue="No Message"

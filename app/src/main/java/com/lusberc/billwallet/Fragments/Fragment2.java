@@ -11,11 +11,13 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.lusberc.billwallet.Models.Bill;
 import com.lusberc.billwallet.R;
 
 public class Fragment2 extends Fragment {
 
     final private String TAG = "Fragment 1";
+    private static final String DESCRIBABLE_KEY = "bill_key";
 
     public Fragment2() {
         // Required empty public constructor

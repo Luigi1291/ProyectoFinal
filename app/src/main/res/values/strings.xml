@@ -42,6 +42,11 @@
     <string name="invalid_passwLength">Al menos 6 caracteres</string>
     <string name="invalid_confirmPassw">Contraseña Incorrecta</string>
 
+
+    <string name="hint_comercio">Comercio</string>
+    <string name="hint_fecha">Fecha de Compra</string>
+    <string name="hint_monto">Monto Total</string>
+
     <string name="loadingPage">Cargando...</string>
 
     <!-- Facebook Login -->

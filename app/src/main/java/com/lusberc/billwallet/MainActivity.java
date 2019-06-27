@@ -24,10 +24,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,12 +45,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.lusberc.billwallet.Fragments.Fragment2;
 import com.lusberc.billwallet.LogIn.LoginActivity;
 import com.lusberc.billwallet.Models.Bill;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 import static android.widget.Toast.LENGTH_LONG;
@@ -55,7 +61,6 @@ import static com.lusberc.billwallet.Utilities.GeneralValidations.extractBillDat
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Uri imageUri;
     private static final int TAKE_PICTURE = 1;
     private static final int PICK_IMAGE = 2;
     private FirebaseAuth mAuth;
@@ -102,7 +107,7 @@ public class MainActivity extends AppCompatActivity
         switch (requestCode) {
             case TAKE_PICTURE:
                 if (resultCode == RESULT_OK) {
-                    Uri selectedImage = imageUri;
+                    Uri selectedImage = bill.getImageUri();
                     int writePermissionCode = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     int readPermissionCode = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
                     if (readPermissionCode == PackageManager.PERMISSION_DENIED || writePermissionCode == PackageManager.PERMISSION_DENIED) {
@@ -113,7 +118,6 @@ public class MainActivity extends AppCompatActivity
                     } else {
 
                     try {
-                        bill = new Bill();
                         FirebaseVisionImage image;
                         image = FirebaseVisionImage.fromFilePath(getApplicationContext(), selectedImage);
                         FirebaseVisionTextRecognizer textRecognizer = FirebaseVision.getInstance()
@@ -125,40 +129,6 @@ public class MainActivity extends AppCompatActivity
 
                                     bill.setImageText(result.getText());
                                     addBillToFirebase();
-
-                                    /*
-                                    If the text recognition operation succeeds, a FirebaseVisionText object will be passed to the success listener.
-                                    A FirebaseVisionText object contains the full text recognized in the image and zero or more TextBlock objects.
-                                    Each TextBlock represents a rectangular block of text, which contains zero or more Line objects.
-                                    Each Line object contains zero or more Element objects, which represent words and word-like entities (dates, numbers, and so on).
-                                    For each TextBlock , Line , and Element object, you can get the text recognized in the region and the bounding coordinates of the region.
-
-                                     */
-
-
-                                    /*Yo can also iterate through the blocks and extract the text from there
-                                    * This is more used on cases that you require an specific value*/
-                                    /*for (FirebaseVisionText.TextBlock block : result.getTextBlocks()) {
-                                        String blockText = block.getText();
-                                        Float blockConfidence = block.getConfidence();
-                                        List<RecognizedLanguage> blockLanguages = block.getRecognizedLanguages();
-                                        Point[] blockCornerPoints = block.getCornerPoints();
-                                        Rect blockFrame = block.getBoundingBox();
-                                        for (FirebaseVisionText.Line line : block.getLines()) {
-                                            String lineText = line.getText();
-                                            Float lineConfidence = line.getConfidence();
-                                            List<RecognizedLanguage> lineLanguages = line.getRecognizedLanguages();
-                                            Point[] lineCornerPoints = line.getCornerPoints();
-                                            Rect lineFrame = line.getBoundingBox();
-                                            for (FirebaseVisionText.Element element : line.getElements()) {
-                                                String elementText = element.getText();
-                                                Float elementConfidence = element.getConfidence();
-                                                List<RecognizedLanguage> elementLanguages = element.getRecognizedLanguages();
-                                                Point[] elementCornerPoints = element.getCornerPoints();
-                                                Rect elementFrame = element.getBoundingBox();
-                                            }
-                                        }
-                                    }*/
                                 }
                             })
                             .addOnFailureListener(
@@ -173,18 +143,18 @@ public class MainActivity extends AppCompatActivity
                 } catch (Exception e) {
                     showToastMsj("Fallo al cargar la imagen");
                     Log.e("Camera", e.toString());
-                    Log.e("Camera", e.getStackTrace().toString());
+                    Log.e("Camera", Arrays.toString(e.getStackTrace()));
                 }
                     }
             }
             break;
-            case PICK_IMAGE:
-                    Uri selectedImage = data.getData();
+            case PICK_IMAGE: {
+                if( data != null) {
+                    bill.setImageUri(data.getData());
 
-                    try{
-                        bill = new Bill();
+                    try {
                         FirebaseVisionImage image;
-                        image = FirebaseVisionImage.fromFilePath(getApplicationContext(), selectedImage);
+                        image = FirebaseVisionImage.fromFilePath(getApplicationContext(), bill.getImageUri());
                         FirebaseVisionTextRecognizer textRecognizer = FirebaseVision.getInstance()
                                 .getOnDeviceTextRecognizer();
                         textRecognizer.processImage(image)
@@ -203,15 +173,19 @@ public class MainActivity extends AppCompatActivity
                                                 showToastMsj("Fallo al procesar la imagen");
                                             }
                                         });
-                    }catch (IOException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     } catch (Exception e) {
                         showToastMsj("Fallo al cargar la imagen");
                         Log.e("Camera", e.toString());
-                        Log.e("Camera", e.getStackTrace().toString());
+                        Log.e("Camera", Arrays.toString(e.getStackTrace()));
                     }
+                }
+                else{
+                    showToastMsj("No seleccionaste ninguna imagen");
+                }
 
-
+            }
         }
     }
 
@@ -319,17 +293,19 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date resultdate = new Date(System.currentTimeMillis());
+        if(bill == null) bill = new Bill();
         bill.setFechaVencimiento(formatter.format(resultdate));
         File photo = new File(Environment.getExternalStorageDirectory(),  bill.getFechaVencimiento()+"Bill.jpg");
         intent.putExtra(MediaStore.EXTRA_OUTPUT,
                 Uri.fromFile(photo));
-        imageUri = Uri.fromFile(photo);
+        bill.setImageUri(Uri.fromFile(photo));
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         startActivityForResult(intent, TAKE_PICTURE);
     }
 
     public void uploadPhoto(View view) {
+        if(bill == null) bill = new Bill();
         //Create an Intent with action as ACTION_PICK
         Intent intent=new Intent(Intent.ACTION_PICK);
         // Sets the type as image/*. This ensures only components of type image are selected
@@ -348,6 +324,7 @@ public class MainActivity extends AppCompatActivity
 
     private void showTextOnFragment(String text){
         TextView txtRes = this.findViewById(R.id.txtResult);
+        txtRes.setCursorVisible(true);
         txtRes.setText(text);
     }
 
@@ -391,14 +368,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void addImageToFirebaseStorage(){
-        Uri file = imageUri;
+        Uri file = bill.getImageUri();
         StorageMetadata metadata = new StorageMetadata.Builder()
                 .setContentType("image/jpg")
                 .build();
-        final StorageReference riversRef = mStorageRef.child("images/"+ file.getLastPathSegment());
+        final StorageReference riversRef = mStorageRef.child("images/"+ bill.getImageName());
         UploadTask uploadTask = riversRef.putFile(file, metadata);
 
-// Register observers to listen for when the download is done or if it fails
+        // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -417,16 +394,25 @@ public class MainActivity extends AppCompatActivity
     private void addBillToFirebase(){
         String fechaVencimiento =  extractBillDate(bill.getImageText());
         if(!fechaVencimiento.isEmpty())bill.setFechaVencimiento(fechaVencimiento);
+        bill.setUserID(currentUser.getUid());
+        String id = db.collection("users").document(bill.getUserID()).getId();
+        bill.setImageName(id);
+
+        /*TODO:
+            Extraer Monto total
+            guardar imagen usando el storage de firebase
+         */
 
 
-        //TODO: Crear objeto y guardarlo en firebase, guardar imagen usando el storage de firebase
+
+/*
 
 
 
-        /*
+
         db.collection("textBills")
-                .document(currentUser.getUid())
-                .set(imageText)
+                .document(bill.getUserID())
+                .set(bill)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void documentReference) {
@@ -447,8 +433,7 @@ public class MainActivity extends AppCompatActivity
                         //mySnackbar.setAction(R.string.undo_string, new MyUndoListener());
                         mySnackbar.show();
                     }
-                });
-                */
+                });*/
     }
 
 

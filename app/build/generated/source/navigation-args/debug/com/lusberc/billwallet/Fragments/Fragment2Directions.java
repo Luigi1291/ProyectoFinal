@@ -1,7 +1,7 @@
 package com.lusberc.billwallet.Fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import androidx.navigation.NavDirections;
 import com.lusberc.billwallet.R;
 import java.lang.IllegalArgumentException;

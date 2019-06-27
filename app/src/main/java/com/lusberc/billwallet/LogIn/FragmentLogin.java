@@ -85,6 +85,15 @@ public class FragmentLogin extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (dialog != null) {
+            dialog.dismiss();
+            dialog = null;
+        }
+    }
+
     private void setupUI(View view){
         final Button btnLogin = view.findViewById(R.id.btnLogin);
         final EditText txtUser = view.findViewById(R.id.txtLoginEmail);

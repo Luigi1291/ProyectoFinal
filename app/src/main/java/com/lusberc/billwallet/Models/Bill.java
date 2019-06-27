@@ -1,9 +1,13 @@
 package com.lusberc.billwallet.Models;
 
-import java.util.Date;
+import android.net.Uri;
 
-public class Bill {
+import java.io.Serializable;
 
+public class Bill implements Serializable{
+
+    private Uri imageUri;
+    private String imageName;
     private String userID;
     private String imageText;
     private int Monto;
@@ -11,6 +15,21 @@ public class Bill {
     private long y;
     private String fechaVencimiento;
 
+    public Uri getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 
     public String getImageText() {
         return imageText;
