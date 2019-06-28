@@ -8,7 +8,7 @@
     <string name="abrir_sitio">Abrir Sitio Web</string>
     <string name="option_SignOut">Cerrar Sesión</string>
 
-    <string name="menu_home">Tomar Foto</string>
+    <string name="menu_home">Capturar Foto</string>
     <string name="menu_gallery">Listado de Facturas</string>
     <string name="menu_upload">Subir desde Galeria</string>
     <string name="menu_tools">Tools</string>

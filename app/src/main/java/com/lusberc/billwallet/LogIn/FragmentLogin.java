@@ -244,7 +244,7 @@ public class FragmentLogin extends Fragment {
 
             //Maps
             // Intent intent = new Intent(view.getContext(), MainActivity.class);
-            Intent intent = new Intent(view.getContext(), MapsActivityCurrentPlace.class);
+            Intent intent = new Intent(view.getContext(), MainActivity.class);
             //intent.putExtra("RESULT_VALUE", resultado.toString());
             getActivity().startActivity(intent);
             getActivity().finish();

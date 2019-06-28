@@ -1,12 +1,12 @@
 package com.lusberc.billwallet.Models;
 
+import android.location.Address;
 import android.net.Uri;
 
 import java.io.Serializable;
 
 public class Bill implements Serializable{
 
-    private Uri imageUri;
     private String imageName;
     private String userID;
     private String imageText;
@@ -14,13 +14,14 @@ public class Bill implements Serializable{
     private long x;
     private long y;
     private String fechaVencimiento;
+    private Address mAdreess;
 
-    public Uri getImageUri() {
-        return imageUri;
+    public Address getmAdreess() {
+        return mAdreess;
     }
 
-    public void setImageUri(Uri imageUri) {
-        this.imageUri = imageUri;
+    public void setmAdreess(Address mAdreess) {
+        this.mAdreess = mAdreess;
     }
 
     public String getImageName() {

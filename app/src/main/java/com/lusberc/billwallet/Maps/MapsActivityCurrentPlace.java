@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import com.lusberc.billwallet.Models.MyApplication;
 import com.lusberc.billwallet.R;
 
 import java.io.IOException;
@@ -137,11 +138,12 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
         });
 
         Button btnSaveLocation = findViewById(R.id.btnSaveLocation);
+        final Activity activity = this;
         btnSaveLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Save Address
-                //mdesireAddress
+                MyApplication._mBill.setmAdreess(mdesireAddress);
+                activity.finish();
             }
         });
         final Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -167,6 +169,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
 
                 //Current Device Address
                 mdesireAddress = list.get(0);
+                hideKeyboard(activity);
                 return false;
             }
         });

@@ -1,9 +1,14 @@
 package com.lusberc.billwallet;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.location.Address;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +29,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
+import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -45,12 +52,18 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.lusberc.billwallet.Fragments.Fragment2;
 import com.lusberc.billwallet.LogIn.LoginActivity;
 import com.lusberc.billwallet.Models.Bill;
+import com.lusberc.billwallet.Models.MyApplication;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -61,13 +74,15 @@ import static com.lusberc.billwallet.Utilities.GeneralValidations.extractBillDat
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private Uri imageUri;
+    //private ContentLoadingProgressBar progressBar;
     private static final int TAKE_PICTURE = 1;
     private static final int PICK_IMAGE = 2;
+    private static final int INTERNET = 3;
     private FirebaseAuth mAuth;
     private StorageReference mStorageRef;
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
-    private Bill bill;
     private static final String TAG = "MAIN ACTIVITY::";
 
     @Override
@@ -84,14 +99,7 @@ public class MainActivity extends AppCompatActivity
         FirebaseApp.initializeApp(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        /*FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+        //progressBar = (ContentLoadingProgressBar) this.findViewById(R.id.progress_bar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,7 +115,6 @@ public class MainActivity extends AppCompatActivity
         switch (requestCode) {
             case TAKE_PICTURE:
                 if (resultCode == RESULT_OK) {
-                    Uri selectedImage = bill.getImageUri();
                     int writePermissionCode = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     int readPermissionCode = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
                     if (readPermissionCode == PackageManager.PERMISSION_DENIED || writePermissionCode == PackageManager.PERMISSION_DENIED) {
@@ -119,7 +126,7 @@ public class MainActivity extends AppCompatActivity
 
                     try {
                         FirebaseVisionImage image;
-                        image = FirebaseVisionImage.fromFilePath(getApplicationContext(), selectedImage);
+                        image = FirebaseVisionImage.fromFilePath(getApplicationContext(), imageUri);
                         FirebaseVisionTextRecognizer textRecognizer = FirebaseVision.getInstance()
                         .getOnDeviceTextRecognizer();
                         textRecognizer.processImage(image)
@@ -127,7 +134,7 @@ public class MainActivity extends AppCompatActivity
                                 @Override
                                 public void onSuccess(FirebaseVisionText result) {
 
-                                    bill.setImageText(result.getText());
+                                    MyApplication._mBill.setImageText(result.getText());
                                     addBillToFirebase();
                                 }
                             })
@@ -150,11 +157,11 @@ public class MainActivity extends AppCompatActivity
             break;
             case PICK_IMAGE: {
                 if( data != null) {
-                    bill.setImageUri(data.getData());
+                    imageUri = data.getData();
 
                     try {
                         FirebaseVisionImage image;
-                        image = FirebaseVisionImage.fromFilePath(getApplicationContext(), bill.getImageUri());
+                        image = FirebaseVisionImage.fromFilePath(getApplicationContext(), imageUri);
                         FirebaseVisionTextRecognizer textRecognizer = FirebaseVision.getInstance()
                                 .getOnDeviceTextRecognizer();
                         textRecognizer.processImage(image)
@@ -162,7 +169,7 @@ public class MainActivity extends AppCompatActivity
                                     @Override
                                     public void onSuccess(FirebaseVisionText result) {
 
-                                        bill.setImageText(result.getText());
+                                        MyApplication._mBill.setImageText(result.getText());
                                         addBillToFirebase();
                                     }
                                 })
@@ -293,19 +300,17 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date resultdate = new Date(System.currentTimeMillis());
-        if(bill == null) bill = new Bill();
-        bill.setFechaVencimiento(formatter.format(resultdate));
-        File photo = new File(Environment.getExternalStorageDirectory(),  bill.getFechaVencimiento()+"Bill.jpg");
+        MyApplication._mBill.setFechaVencimiento(formatter.format(resultdate));
+        File photo = new File(Environment.getExternalStorageDirectory(),  "Bill.jpg");
         intent.putExtra(MediaStore.EXTRA_OUTPUT,
                 Uri.fromFile(photo));
-        bill.setImageUri(Uri.fromFile(photo));
+        imageUri = Uri.fromFile(photo);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         startActivityForResult(intent, TAKE_PICTURE);
     }
 
     public void uploadPhoto(View view) {
-        if(bill == null) bill = new Bill();
         //Create an Intent with action as ACTION_PICK
         Intent intent=new Intent(Intent.ACTION_PICK);
         // Sets the type as image/*. This ensures only components of type image are selected
@@ -361,58 +366,108 @@ public class MainActivity extends AppCompatActivity
                 return;
                 }
             }
+            case INTERNET:
+            {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0){
+                    if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+                        addImageToFirebaseStorage();
+
+                    } else {
+
+                        // permission denied, boo! Disable the
+                        // functionality that depends on this permission.
+                    }
+                    return;
+                }
+            }
 
             // other 'case' lines to check for other
             // permissions this app might request
         }
     }
 
-    private void addImageToFirebaseStorage(){
-        /*TODO:
-            Extraer Monto total
-            guardar imagen usando el storage de firebase
-         */
-        Uri file = bill.getImageUri();
-        StorageMetadata metadata = new StorageMetadata.Builder()
-                .setContentType("image/jpg")
-                .build();
-        final StorageReference riversRef = mStorageRef.child("images/"+ bill.getImageName());
-        UploadTask uploadTask = riversRef.putFile(file, metadata);
 
-        // Register observers to listen for when the download is done or if it fails
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                showToastMsj("Falló al intentar cargar la imagen");
+    private void addImageToFirebaseStorage(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
+
+
+            String imagePath = "images/users/" + MyApplication._mBill.getImageName() + ".jpg";
+            final StorageReference riversRef = mStorageRef.child(imagePath);
+            final ImageView mImageView = findViewById(R.id.imgResult);
+            UploadTask uploadTask = riversRef.putFile(imageUri);
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    showToastMsj("Falló al intentar cargar la imagen");
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    riversRef.getDownloadUrl().addOnSuccessListener(
+                            new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uriData) {
+                                    /*
+                                        Download the image from FireBase and set it as
+                                        ImageView image programmatically.
+                                    */
+                                    new DownLoadImageTask(mImageView).execute(uriData.toString());
+                                }
+                            }
+                    );
+                    showToastMsj(riversRef.getDownloadUrl().toString());
+                }
+            });
+        }else{
+                Log.v(TAG,"Internet Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
             }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
-                showToastMsj(riversRef.getDownloadUrl().toString());
-            }
-        });
+        } else {
+            Log.v(TAG,"Read from file Permission is revoked");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }
     }
 
     private void addBillToFirebase(){
-        String fechaVencimiento =  extractBillDate(bill.getImageText());
-        if(!fechaVencimiento.isEmpty())bill.setFechaVencimiento(fechaVencimiento);
-        bill.setUserID(currentUser.getUid());
-        String id = db.collection("users").document(bill.getUserID()).getId();
-        bill.setImageName(id);
+
+        //progressBar.setVisibility(View.VISIBLE);
+        String fechaVencimiento =  extractBillDate(MyApplication._mBill.getImageText());
+        if(!fechaVencimiento.isEmpty())MyApplication._mBill.setFechaVencimiento(fechaVencimiento);
+        MyApplication._mBill.setUserID(currentUser.getUid());
+        String id = db.collection("textBills")
+                .document(currentUser.getUid())
+                .collection("Facturas")
+                .document().getId();
+        MyApplication._mBill.setImageName(id);
+
+
+
+        addImageToFirebaseStorage();
+
 
         /*TODO:
             Extraer Monto total
             guardar imagen usando el storage de firebase
          */
-
-        this.getApplicationContext();
-
 /*
+
+//Maps
+            // Intent intent = new Intent(view.getContext(), MainActivity.class);
+            Intent intent = new Intent(view.getContext(), MapsActivityCurrentPlace.class);
+            //intent.putExtra("RESULT_VALUE", resultado.toString());
+            getActivity().startActivity(intent);
+            getActivity().finish();
+
+
         db.collection("textBills")
-                .document(bill.getUserID())
-                .set(bill)
+                .document(MyApplication._mBill.getUserID())
+                .collection("Facturas")
+                .document(MyApplication._mBill.getImageName())
+                .set(MyApplication._mBill)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void documentReference) {
@@ -436,5 +491,37 @@ public class MainActivity extends AppCompatActivity
                 });*/
     }
 
+    private class DownLoadImageTask extends AsyncTask<String,Void,Bitmap> {
+        ImageView imageView;
 
+        public DownLoadImageTask(ImageView imageView){
+            this.imageView = imageView;
+        }
+
+        protected void onProgressUpdate(Integer... values) {
+            //progressBar.setProgress(values[0]);
+        }
+
+        protected Bitmap doInBackground(String...urls){
+            String urlOfImage = urls[0];
+            Bitmap logo = null;
+            try{
+                InputStream is = new URL(urlOfImage).openStream();
+                /*
+                    decodeStream(InputStream is)
+                        Decode an input stream into a bitmap.
+                 */
+                logo = BitmapFactory.decodeStream(is);
+            }catch(Exception e){ // Catch the download exception
+                e.printStackTrace();
+            }
+            return logo;
+        }
+        protected void onPostExecute(Bitmap result){
+            //progressBar.setVisibility(View.GONE);
+            imageView.setImageBitmap(result);
+        }
+    }
 }
+
+
