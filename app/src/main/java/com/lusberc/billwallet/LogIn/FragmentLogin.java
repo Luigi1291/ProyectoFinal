@@ -44,6 +44,7 @@ import com.lusberc.billwallet.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.lusberc.billwallet.Utilities.GeneralValidations;
+import com.lusberc.billwallet.Utilities.ProgressBarCustom;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -56,7 +57,8 @@ public class FragmentLogin extends Fragment {
     static final int GOOGLE_SIGN = 123;
     GoogleSignInClient mGoogleSignIn;
     private String TAG = "FragmentLogin";
-    ProgressDialog dialog;
+    ProgressBarCustom mBar;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +74,6 @@ public class FragmentLogin extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        //Loading Page
-        dialog = new ProgressDialog(view.getContext());
-
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
@@ -89,10 +88,7 @@ public class FragmentLogin extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (dialog != null) {
-            dialog.dismiss();
-            dialog = null;
-        }
+        mBar.closeBar();
     }
 
     private void setupUI(View view){
@@ -104,9 +100,7 @@ public class FragmentLogin extends Fragment {
             @Override
             public void onClick(final View view) {
                 if(GeneralValidations.validateLoginFields(view, txtUser, txtPassw)) {
-                    dialog.setMessage(getString(R.string.loadingPage));
-                    dialog.setCancelable(false);
-                    dialog.show();
+                    mBar.showBar(view);
 
                     mAuth.signInWithEmailAndPassword(txtUser.getText().toString(), txtPassw.getText().toString())
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -151,7 +145,7 @@ public class FragmentLogin extends Fragment {
         GoogleConfiguration(view);
     }
 
-    private void GoogleConfiguration(View view){
+    private void GoogleConfiguration(final View view){
 
         SignInButton btnGoogle = view.findViewById(R.id.btnGoogle);
         TextView textView = (TextView) btnGoogle.getChildAt(0);
@@ -160,9 +154,7 @@ public class FragmentLogin extends Fragment {
         btnGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.setMessage(getString(R.string.loadingPage));
-                dialog.setCancelable(false);
-                dialog.show();
+                mBar.showBar(view);
 
                 // Configure Google Sign In
                 GoogleSignInOptions mGoogleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -188,9 +180,7 @@ public class FragmentLogin extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.setMessage(getString(R.string.loadingPage));
-                dialog.setCancelable(false);
-                dialog.show();
+                mBar.showBar(view);
 
                 LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("email", "public_profile"));
                 LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
@@ -203,13 +193,13 @@ public class FragmentLogin extends Fragment {
                     @Override
                     public void onCancel() {
                         Log.d(TAG, "facebook:onCancel");
-                        dialog.hide();
+                        mBar.closeBar();
                     }
 
                     @Override
                     public void onError(FacebookException error) {
                         Log.d(TAG, "facebook:onError", error);
-                        dialog.hide();
+                        mBar.closeBar();
                     }
                 });
             }
@@ -251,7 +241,7 @@ public class FragmentLogin extends Fragment {
         }
         //Desloguear facebook ya que FireBase reconoce el usuario
         LoginManager.getInstance().logOut();
-        dialog.hide();
+        mBar.closeBar();
     }
 
     @Override

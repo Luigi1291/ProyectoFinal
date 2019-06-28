@@ -63,4 +63,9 @@
     <string name="inputSearchHint">Ingrese Dirección o Ciudad</string>
     <string name="btnSaveLocationHint">Guardar Ubicación</string>
 
+    <!-- List Bills -->
+    <string name="storeName">Tienda</string>
+    <string name="billDate">Fecha</string>
+    <string name="other">Otros</string>
+    <string name="listHeader">Listado de Facturas</string>
 </resources>

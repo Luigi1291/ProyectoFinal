@@ -11,10 +11,24 @@ public class Bill implements Serializable{
     private String userID;
     private String imageText;
     private int Monto;
+
+    public Bill() {
+    }
+
     private long x;
     private long y;
     private String fechaVencimiento;
     private Address mAdreess;
+
+    public String getStore() {
+        return Store;
+    }
+
+    public void setStore(String store) {
+        Store = store;
+    }
+
+    private String Store;
 
     public Address getmAdreess() {
         return mAdreess;
