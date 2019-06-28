@@ -1,20 +1,25 @@
 package com.lusberc.billwallet.Maps;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -45,14 +50,17 @@ import com.lusberc.billwallet.R;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MapsActivityCurrentPlace extends AppCompatActivity
-        implements
-        OnMapReadyCallback {
+        implements OnMapReadyCallback {
+
     private static final String TAG = MapsActivityCurrentPlace.class.getSimpleName();
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
     private EditText mSearchText;
+    private Address mdesireAddress;
+
     // The entry points to the Places API.
     private GeoDataClient mGeoDataClient;
     private PlaceDetectionClient mPlaceDetectionClient;
@@ -124,6 +132,41 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
                         || event.getAction() == KeyEvent.KEYCODE_ENTER){
                     geoLocate();
                 }
+                return true;
+            }
+        });
+
+        Button btnSaveLocation = findViewById(R.id.btnSaveLocation);
+        btnSaveLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Save Address
+                //mdesireAddress
+            }
+        });
+        final Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        //add location button click listener
+        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener(){
+            @Override
+            public boolean onMyLocationButtonClick()
+            {
+                mMap.clear();
+                mSearchText.setText("");
+                LatLng currentLocation = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                mMap.addMarker(new MarkerOptions().position(currentLocation)
+                        .title("Mi Ubicacion")).showInfoWindow();
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+
+                List<Address> list = new ArrayList<>();
+                try{
+                    list = geocoder.getFromLocation(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude(), 1);
+                } catch (IOException e){
+                    Log.e(TAG, "getDeviceLocation: IOException " + e.getMessage());
+                }
+
+                //Current Device Address
+                mdesireAddress = list.get(0);
                 return false;
             }
         });
@@ -139,10 +182,19 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
             Log.e(TAG, "geoLocate: IOException " + e.getMessage());
         }
         if(list.size() > 0){
-            Address address = list.get(0);
-            mSearchText.setText(address.toString());
-        }
+            mdesireAddress = list.get(0);
 
+            //Clean markers
+            mMap.clear();
+            LatLng searchLocation = new LatLng(mdesireAddress.getLatitude(), mdesireAddress.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(searchLocation)
+                    .title(searchString)).showInfoWindow();
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(searchLocation));
+        }
+        else
+            Toast.makeText(this,"Ubicación no encontrada",Toast.LENGTH_SHORT).show();
+
+        hideKeyboard(this);
     }
 
     /**
@@ -155,6 +207,17 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
             outState.putParcelable(KEY_LOCATION, mLastKnownLocation);
             super.onSaveInstanceState(outState);
         }
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     /**
@@ -212,6 +275,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
          */
         try {
             if (mLocationPermissionGranted) {
+                final Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
                 Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
                 locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
                     @Override
@@ -222,6 +287,21 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(mLastKnownLocation.getLatitude(),
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+
+                            LatLng currentLocation = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                            mMap.addMarker(new MarkerOptions().position(currentLocation)
+                                    .title("Mi Ubicacion")).showInfoWindow();
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+
+                            List<Address> list = new ArrayList<>();
+                            try{
+                                list = geocoder.getFromLocation(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude(), 1);
+                            } catch (IOException e){
+                                Log.e(TAG, "getDeviceLocation: IOException " + e.getMessage());
+                            }
+
+                            //Current Device Address
+                            mdesireAddress = list.get(0);
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
                             Log.e(TAG, "Exception: %s", task.getException());
@@ -402,7 +482,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
             if (mLocationPermissionGranted) {
                 mMap.setMyLocationEnabled(true);
                 // Dont need relocate my position
-                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
                 mMap.setMyLocationEnabled(false);
                 mMap.getUiSettings().setMyLocationButtonEnabled(false);
