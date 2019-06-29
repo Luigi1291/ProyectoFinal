@@ -19,6 +19,7 @@
     <string name="fragment_1">Fragment 1</string>
     <string name="fragment_2">Fragment 2</string>
     <string name="fragment_3">Fragment 3</string>
+    <string name="fragment_list">List</string>
     <string name="message">Message</string>
 
     <!-- Login Values -->
@@ -34,6 +35,7 @@
 
     <string name="btnTomarFoto">Tomar Foto</string>
     <string name="btnSubirFoto">Subir desde Galeria</string>
+    <string name="btnLista">Ver mis facturas</string>
     <string name="btnConfirmar">Guardar</string>
     <string name="btnSubirNueva">Cargar otra factura</string>
     <string name="btnUicacionText">Incluir Ubicacion</string>
@@ -50,6 +52,7 @@
 
 
     <string name="hint_comercio">Comercio</string>
+    <string name="hint_friendlyname">Nombre de factura</string>
     <string name="hint_fecha">Fecha de Compra</string>
     <string name="hint_monto">Monto Total</string>
 

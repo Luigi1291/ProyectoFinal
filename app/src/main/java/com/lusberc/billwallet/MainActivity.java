@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -256,6 +257,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment fragment = null;
 
         if (id == R.id.nav_home) {
             // Handle the camera action
@@ -272,7 +274,18 @@ public class MainActivity extends AppCompatActivity
 
             //TODO: Crear lista de imagenes con vista previa por usuario.
 
-            FragmentList fragmentl = new FragmentList();
+
+/*
+            fragment = new FragmentList();
+
+            if (fragment != null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(android.R.id.content, fragment);
+                ft.commit();
+            }
+
+            */
+
 /*
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, fragmentl)

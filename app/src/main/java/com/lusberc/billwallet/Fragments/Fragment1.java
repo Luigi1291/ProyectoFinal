@@ -19,8 +19,6 @@ import static android.widget.Toast.LENGTH_LONG;
 
 public class Fragment1 extends Fragment {
 
-    //TODO: crear en esta vista campos para fecha, monto, descripcion
-    // y demas funcionalidad para incluir ademas de la imagen
 
     final private String TAG = "Fragment 1";
     ProgressBarCustom mBar;
@@ -51,9 +49,19 @@ public class Fragment1 extends Fragment {
 
     private void setupUI(View view) {
         Button btnNuevaFoto = view.findViewById(R.id.btnNuevaFoto);
+        Button btnLista = view.findViewById(R.id.btnLista);
         Button btnSubirFoto = view.findViewById(R.id.btnUploadFoto);
         FloatingActionButton btn_next = view.findViewById(R.id.btn_fgmt1_next);
         final MainActivity main = (MainActivity) getActivity();
+
+        btnLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v)
+                        .navigate(R.id.fragment1toList);
+            }
+        });
+
         btnNuevaFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

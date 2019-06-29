@@ -74,11 +74,11 @@ public class Fragment2 extends Fragment {
                     @Override
                     public void onSuccess(Void documentReference) {
                         Log.d(TAG, "Image Text added for user "+ currentUser.getDisplayName());
-                        Snackbar mySnackbar = Snackbar.make(getView(),
-                                "Image text added with ID:" + documentReference.toString() ,
+                        /*Snackbar mySnackbar = Snackbar.make(getView(),
+                                "Image text added with ID:" ,
                                 Snackbar.LENGTH_SHORT);
                         //mySnackbar.setAction(R.string.undo_string, new MyUndoListener());
-                        mySnackbar.show();
+                        mySnackbar.show();*/
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -106,6 +106,7 @@ public class Fragment2 extends Fragment {
         final EditText fecha = view.findViewById(R.id.txtFechaCompra);
         final EditText monto = view.findViewById(R.id.txtMontoTotal);
         final EditText comercio = view.findViewById(R.id.txtComercio);
+        final EditText nombre = view.findViewById(R.id.txtname);
 
         String fechaFactura = MyApplication._mBill.getFechaVencimiento();
         if(fecha!= null && !fechaFactura.isEmpty()) fecha.setText(fechaFactura);
@@ -134,6 +135,11 @@ public class Fragment2 extends Fragment {
                 if(!hasStored){
                     if(GeneralValidations.validateUserBillFields(v,monto,comercio,fecha)){
                         mBar.showBar(v);
+                        MyApplication._mBill.setMonto(Integer.parseInt(monto.getText().toString()));
+                        MyApplication._mBill.setFechaVencimiento(fecha.getText().toString());
+                        MyApplication._mBill.setStore(comercio.getText().toString());
+                        if(!nombre.getText().toString().isEmpty())
+                            MyApplication._mBill.setStore(nombre.getText().toString());
                         addBillToFirebase();
                         String content = "";
                         Fragment2Directions.Fragment2to3 action =
@@ -155,6 +161,11 @@ public class Fragment2 extends Fragment {
                 if(!hasStored){
                     if(GeneralValidations.validateUserBillFields(v,monto,comercio,fecha)){
                         mBar.showBar(v);
+                        MyApplication._mBill.setMonto(Integer.parseInt(monto.getText().toString()));
+                        MyApplication._mBill.setFechaVencimiento(fecha.getText().toString());
+                        MyApplication._mBill.setStore(comercio.getText().toString());
+                        if(!nombre.getText().toString().isEmpty())
+                            MyApplication._mBill.setStore(nombre.getText().toString());
                         addBillToFirebase();
                         String content = "";
                         Fragment2Directions.Fragment2to3 action =

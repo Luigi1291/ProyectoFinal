@@ -16,12 +16,23 @@
         android:textSize="24sp"/>
 
     <Button
-        android:id="@+id/btnNuevaFoto"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="100dp"
+        android:id="@+id/btnLista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/imgResult"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="100dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/btnLista"
+        android:background="@color/colorAppBackground"/>
+
+    <Button
+        android:id="@+id/btnNuevaFoto"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnLista"
         android:layout_centerHorizontal="true"
         android:text="@string/btnTomarFoto"
         android:background="@color/colorAppBackground"

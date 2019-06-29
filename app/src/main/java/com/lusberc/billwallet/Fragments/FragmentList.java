@@ -38,7 +38,7 @@ public class FragmentList extends Fragment {
         return view;
     }
 
-    private void setupUI (View view) {
+    private void setupUI (final View view) {
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -46,12 +46,12 @@ public class FragmentList extends Fragment {
 
 
         //Llenar adapter con lista
-        int layoutId = R.layout.bills_list_view;
+        final int layoutId = R.layout.bills_list_view;
 
         //Llamar BD lista de facturas
         final ArrayList<Bill> mList = new ArrayList<>();
 
-        db.collection("textBills")
+        db.collection("Facturas")
                 .document(currentUser.getUid())
                 .collection("Facturas")
                 .get()
@@ -65,6 +65,10 @@ public class FragmentList extends Fragment {
                         b.setImageName(document.getId());
                         mList.add(b);
                     }
+                    BillsAdapterView adapter = new BillsAdapterView(view.getContext() ,layoutId, mList);
+
+                    ListView mListView = view.findViewById(R.id.listViewBills);
+                    mListView.setAdapter(adapter);
                 } else {
                     Log.d("FRAGMENTLIST", "Error getting documents: ", task.getException());
                 }
