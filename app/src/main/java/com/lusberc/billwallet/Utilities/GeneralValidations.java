@@ -70,6 +70,30 @@ public class GeneralValidations {
         return isOk;
     }
 
+    public static boolean validateUserBillFields(View view, EditText txtMonto, EditText txtComercio, EditText txtFecha){
+        boolean isOk = true;
+        String monto = txtMonto.getText().toString();
+        String comercio = txtComercio.getText().toString();
+        String fecha = txtFecha.getText().toString();
+
+        if(fecha.isEmpty()){
+            txtFecha.setError(view.getContext().getString(R.string.invalid_fecha));
+            isOk = false;
+        }
+
+        if(comercio.isEmpty()){
+            txtComercio.setError(view.getContext().getString(R.string.invalid_comercio));
+            isOk = false;
+        }
+        else
+        if(monto.isEmpty()){
+            txtMonto.setError(view.getContext().getString(R.string.invalid_monto));
+            isOk = false;
+        }
+
+        return isOk;
+    }
+
     public static String extractBillDate(String text){
         String regex = "(\\d{1,2}/\\d{1,2}/\\d{4}|\\d{1,2}/\\d{1,2})";
 

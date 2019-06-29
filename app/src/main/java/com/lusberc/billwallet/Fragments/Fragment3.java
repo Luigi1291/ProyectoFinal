@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.lusberc.billwallet.R;
 
@@ -33,9 +35,19 @@ public class Fragment3 extends Fragment {
 
     private void setupUI(View view) {
         TextView txtmessage = view.findViewById(R.id.txt_showmsj);
+        Button btn_next = view.findViewById(R.id.btnUploadNewPhoto);
         Fragment3Args args = Fragment3Args
                 .fromBundle(getArguments());
         txtmessage.setText(args.getMessage());
+
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Navigation.findNavController(v)
+                            .navigate(R.id.fragment3to1);
+
+            }
+        });
     }
 
 }

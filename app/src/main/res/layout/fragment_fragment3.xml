@@ -1,26 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_orange_dark"
+    android:background="@drawable/com_facebook_button_icon_white"
     tools:context=".Fragments.Fragment3">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
         android:id="@+id/txt_frmtid"
-        android:layout_width="match_parent"
-        android:layout_height="440dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:text="@string/fragment_3"
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        app:srcCompat="@drawable/success"/>
 
     <TextView
         android:id="@+id/txt_showmsj"
         android:layout_width="match_parent"
-        android:layout_height="440dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/txt_frmtid"
         android:gravity="center"
         android:textSize="36sp" />
+
+    <Button
+        android:id="@+id/btnUploadNewPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_showmsj"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="100dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/btnSubirNueva"
+        android:background="@color/colorAppBackground"/>
 
 </RelativeLayout>

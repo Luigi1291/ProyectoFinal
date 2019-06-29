@@ -1,12 +1,10 @@
 package com.lusberc.billwallet;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Address;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -29,16 +27,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
-import androidx.core.widget.ContentLoadingProgressBar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.Navigation;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,20 +45,16 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.lusberc.billwallet.Fragments.FragmentList;
 import com.lusberc.billwallet.LogIn.LoginActivity;
-import com.lusberc.billwallet.Models.Bill;
 import com.lusberc.billwallet.Models.MyApplication;
+import com.lusberc.billwallet.Utilities.ProgressBarCustom;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -75,10 +67,10 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Uri imageUri;
-    //private ContentLoadingProgressBar progressBar;
     private static final int TAKE_PICTURE = 1;
     private static final int PICK_IMAGE = 2;
     private static final int INTERNET = 3;
+    public boolean hasUploadedImage = false;
     private FirebaseAuth mAuth;
     private StorageReference mStorageRef;
     private FirebaseFirestore db;
@@ -89,6 +81,13 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupUI();
+
+    }
+
+    private void setupUI() {
+
+
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         mStorageRef = FirebaseStorage.getInstance().getReference(currentUser.getUid());
@@ -99,7 +98,6 @@ public class MainActivity extends AppCompatActivity
         FirebaseApp.initializeApp(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //progressBar = (ContentLoadingProgressBar) this.findViewById(R.id.progress_bar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,6 +105,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -135,7 +134,9 @@ public class MainActivity extends AppCompatActivity
                                 public void onSuccess(FirebaseVisionText result) {
 
                                     MyApplication._mBill.setImageText(result.getText());
-                                    addBillToFirebase();
+                                    final ImageView mImageView = findViewById(R.id.imgResult);
+                                    mImageView.setImageURI(Uri.parse(imageUri.toString()));
+                                    loadBillObject();
                                 }
                             })
                             .addOnFailureListener(
@@ -170,7 +171,9 @@ public class MainActivity extends AppCompatActivity
                                     public void onSuccess(FirebaseVisionText result) {
 
                                         MyApplication._mBill.setImageText(result.getText());
-                                        addBillToFirebase();
+                                        final ImageView mImageView = findViewById(R.id.imgResult);
+                                        mImageView.setImageURI(Uri.parse(imageUri.toString()));
+                                        loadBillObject();
                                     }
                                 })
                                 .addOnFailureListener(
@@ -269,6 +272,13 @@ public class MainActivity extends AppCompatActivity
 
             //TODO: Crear lista de imagenes con vista previa por usuario.
 
+            FragmentList fragmentl = new FragmentList();
+/*
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, fragmentl)
+                    .addToBackStack(FragmentList.class.getSimpleName())
+                    .commit();
+*/
         } else if (id == R.id.nav_upload) {
             //Revisar permisos de escritura y lectura
             int writePermissionCode = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -297,6 +307,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void takePhoto(View view) {
+        hasUploadedImage = false;
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date resultdate = new Date(System.currentTimeMillis());
@@ -311,6 +322,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void uploadPhoto(View view) {
+        hasUploadedImage = false;
         //Create an Intent with action as ACTION_PICK
         Intent intent=new Intent(Intent.ACTION_PICK);
         // Sets the type as image/*. This ensures only components of type image are selected
@@ -320,6 +332,7 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
         // Launching the Intent
         startActivityForResult(intent, PICK_IMAGE);
+        ProgressBarCustom.closeBar();
     }
 
     public void showToastMsj(String message){
@@ -337,11 +350,11 @@ public class MainActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case TAKE_PICTURE: {
-                // If request is cancelled, the result arrays are empty.
+                // Si el usuario desea tomar fotos
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    takePhoto(this.getCurrentFocus());
+                    takePhoto(getCurrentFocus());
 
                 } else {
 
@@ -356,7 +369,7 @@ public class MainActivity extends AppCompatActivity
                 if (grantResults.length > 0){
                  if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
 
-                    uploadPhoto(this.getCurrentFocus());
+                    uploadPhoto(getCurrentFocus());
 
                 } else {
 
@@ -372,7 +385,7 @@ public class MainActivity extends AppCompatActivity
                 if (grantResults.length > 0){
                     if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
 
-                        addImageToFirebaseStorage();
+                        //addImageToFirebaseStorage();
 
                     } else {
 
@@ -388,41 +401,41 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
     private void addImageToFirebaseStorage(){
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
 
 
-            String imagePath = "images/users/" + MyApplication._mBill.getImageName() + ".jpg";
-            final StorageReference riversRef = mStorageRef.child(imagePath);
-            final ImageView mImageView = findViewById(R.id.imgResult);
-            UploadTask uploadTask = riversRef.putFile(imageUri);
-            // Register observers to listen for when the download is done or if it fails
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    showToastMsj("Falló al intentar cargar la imagen");
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    riversRef.getDownloadUrl().addOnSuccessListener(
-                            new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uriData) {
+                String imagePath = "images/users/" + MyApplication._mBill.getImageName() + ".jpg";
+                final StorageReference riversRef = mStorageRef.child(imagePath);
+                final ImageView mImageView = getCurrentFocus().findViewById(R.id.imgResult);
+                UploadTask uploadTask = riversRef.putFile(imageUri);
+                // Register observers to listen for when the download is done or if it fails
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        showToastMsj("Falló al intentar cargar la imagen");
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        riversRef.getDownloadUrl().addOnSuccessListener(
+                                new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uriData) {
                                     /*
                                         Download the image from FireBase and set it as
                                         ImageView image programmatically.
                                     */
-                                    new DownLoadImageTask(mImageView).execute(uriData.toString());
+                                        new MainActivity.DownLoadImageTask(mImageView).execute(uriData.toString());
+                                    }
                                 }
-                            }
-                    );
-                    showToastMsj(riversRef.getDownloadUrl().toString());
-                }
-            });
-        }else{
+                        );
+                        hasUploadedImage = true;
+                        showToastMsj(riversRef.getDownloadUrl().toString());
+                    }
+                });
+            }else{
                 Log.v(TAG,"Internet Permission is revoked");
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
             }
@@ -432,66 +445,20 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void addBillToFirebase(){
+    private void loadBillObject() {
 
-        //progressBar.setVisibility(View.VISIBLE);
-        String fechaVencimiento =  extractBillDate(MyApplication._mBill.getImageText());
-        if(!fechaVencimiento.isEmpty())MyApplication._mBill.setFechaVencimiento(fechaVencimiento);
+        String fechaVencimiento = extractBillDate(MyApplication._mBill.getImageText());
+        if (!fechaVencimiento.isEmpty()) MyApplication._mBill.setFechaVencimiento(fechaVencimiento);
         MyApplication._mBill.setUserID(currentUser.getUid());
         String id = db.collection("textBills")
                 .document(currentUser.getUid())
                 .collection("Facturas")
                 .document().getId();
         MyApplication._mBill.setImageName(id);
-
-
-
-        addImageToFirebaseStorage();
-
-
-        /*TODO:
-            Extraer Monto total
-            guardar imagen usando el storage de firebase
-         */
-/*
-
-//Maps
-            // Intent intent = new Intent(view.getContext(), MainActivity.class);
-            Intent intent = new Intent(view.getContext(), MapsActivityCurrentPlace.class);
-            //intent.putExtra("RESULT_VALUE", resultado.toString());
-            getActivity().startActivity(intent);
-            getActivity().finish();
-
-
-        db.collection("textBills")
-                .document(MyApplication._mBill.getUserID())
-                .collection("Facturas")
-                .document(MyApplication._mBill.getImageName())
-                .set(MyApplication._mBill)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void documentReference) {
-                        Log.d(TAG, "Image Text added for user "+ currentUser.getDisplayName());
-                        Snackbar mySnackbar = Snackbar.make(getCurrentFocus(),
-                                "Image text added with ID:" ,
-                                Snackbar.LENGTH_SHORT);
-                        //mySnackbar.setAction(R.string.undo_string, new MyUndoListener());
-                        mySnackbar.show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding bill", e);
-                        Snackbar mySnackbar = Snackbar.make(getCurrentFocus(),
-                                "Error adding bill", Snackbar.LENGTH_SHORT);
-                        //mySnackbar.setAction(R.string.undo_string, new MyUndoListener());
-                        mySnackbar.show();
-                    }
-                });*/
+        hasUploadedImage = true;
     }
 
-    private class DownLoadImageTask extends AsyncTask<String,Void,Bitmap> {
+    private class DownLoadImageTask extends AsyncTask<String,Void, Bitmap> {
         ImageView imageView;
 
         public DownLoadImageTask(ImageView imageView){
@@ -522,6 +489,7 @@ public class MainActivity extends AppCompatActivity
             imageView.setImageBitmap(result);
         }
     }
+
 }
 
 

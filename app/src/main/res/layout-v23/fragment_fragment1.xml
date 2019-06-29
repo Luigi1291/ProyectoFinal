@@ -15,19 +15,8 @@
         android:gravity="center"
         android:textSize="24sp"/>
 
-    <androidx.core.widget.ContentLoadingProgressBar
-        style="@android:style/Widget.Holo.Light.ProgressBar"
-        android:id="@id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:progress="10"
-        android:visibility="invisible"
-        />
-
     <Button
-        android:id="@id/btnNuevaFoto"
+        android:id="@+id/btnNuevaFoto"
         android:layout_marginTop="50dp"
         android:layout_marginRight="100dp"
         android:layout_width="match_parent"
@@ -39,6 +28,7 @@
         />
 
     <Button
+        android:id="@+id/btnUploadFoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnNuevaFoto"
@@ -60,4 +50,5 @@
         android:layout_weight="1"
         android:clickable="true"
         android:src="@drawable/ic_menu_send" />
+
 </RelativeLayout>

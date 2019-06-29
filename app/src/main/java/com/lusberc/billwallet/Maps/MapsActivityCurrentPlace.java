@@ -142,7 +142,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
         btnSaveLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyApplication._mBill.setmAdreess(mdesireAddress);
+                MyApplication._mBill.setX(mdesireAddress.getLongitude());
+                MyApplication._mBill.setY(mdesireAddress.getLatitude());
                 activity.finish();
             }
         });

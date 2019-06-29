@@ -35,9 +35,14 @@
     <string name="btnTomarFoto">Tomar Foto</string>
     <string name="btnSubirFoto">Subir desde Galeria</string>
     <string name="btnConfirmar">Guardar</string>
+    <string name="btnSubirNueva">Cargar otra factura</string>
+    <string name="btnUicacionText">Incluir Ubicacion</string>
 
     <!-- Validations -->
     <string name="invalid_email">Correo Inválido</string>
+    <string name="invalid_monto">Monto Inválido</string>
+    <string name="invalid_fecha">Fecha Inválida</string>
+    <string name="invalid_comercio">Comercio Inválido</string>
     <string name="invalid_passw">Contraseña Inválida</string>
     <string name="invalid_format">Formato Inválido</string>
     <string name="invalid_passwLength">Al menos 6 caracteres</string>
