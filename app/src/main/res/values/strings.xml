@@ -39,6 +39,7 @@
     <string name="btnConfirmar">Guardar</string>
     <string name="btnSubirNueva">Cargar otra factura</string>
     <string name="btnUicacionText">Incluir Ubicacion</string>
+    <string name="lblSucess">Factura Guardada con éxito</string>
 
     <!-- Validations -->
     <string name="invalid_email">Correo Inválido</string>

@@ -7,16 +7,15 @@
     android:background="@drawable/com_facebook_button_icon_white"
     tools:context=".Fragments.Fragment3">
 
-    <!-- TODO: Update blank fragment layout -->
-    <ImageView
+    <ImageButton
         android:id="@+id/txt_frmtid"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:layout_width="332dp"
+        android:layout_height="381dp"
         android:layout_centerInParent="true"
+        android:contentDescription="TODO"
         android:gravity="center"
-        android:text="@string/fragment_3"
-        android:textSize="36sp"
-        app:srcCompat="@drawable/success"/>
+        android:src="@drawable/success"
+        android:text="@string/fragment_3" />
 
     <TextView
         android:id="@+id/txt_showmsj"
@@ -24,7 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txt_frmtid"
         android:gravity="center"
-        android:textSize="36sp" />
+        android:text="@string/lblSucess"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/btnUploadNewPhoto"

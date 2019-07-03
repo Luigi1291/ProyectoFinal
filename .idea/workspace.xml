@@ -9,17 +9,15 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99dabbaf-4029-4a02-a01e-9fcfe3379bea" name="Default Changelist" comment="">
+    <list default="true" id="99dabbaf-4029-4a02-a01e-9fcfe3379bea" name="Default Changelist" comment="final">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment1.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment2.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Adapters/BillsAdapterView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Adapters/BillsAdapterView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment3.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment3.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/FragmentList.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/FragmentList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout-v23/fragment_fragment1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout-v23/fragment_fragment1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/nav_graph.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/nav_graph.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -73,31 +71,20 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment2.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/bills_list_view.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="67" column="31" selection-start-line="67" selection-start-column="23" selection-end-line="67" selection-end-column="31" />
-              <folding>
-                <element signature="e#2713#3306#0" expanded="true" />
-                <element signature="e#3305#3306#0" expanded="true" />
-                <element signature="e#3346#3850#0" expanded="true" />
-                <element signature="e#3849#3850#0" expanded="true" />
-                <element signature="e#4978#5375#0" expanded="true" />
-                <element signature="e#5374#5375#0" expanded="true" />
-                <element signature="e#5481#6721#0" expanded="true" />
-                <element signature="e#6720#6721#0" expanded="true" />
-                <element signature="e#6841#7988#0" expanded="true" />
-                <element signature="e#7987#7988#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="612">
+              <caret line="36" column="47" selection-start-line="36" selection-start-column="47" selection-end-line="36" selection-end-column="47" />
             </state>
           </provider>
+          <provider editor-type-id="android-designer2" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/FragmentList.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="56" column="22" selection-start-line="56" selection-start-column="22" selection-end-line="56" selection-end-column="22" />
+            <state relative-caret-position="765">
+              <caret line="71" column="24" lean-forward="true" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -105,14 +92,69 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="29" lean-forward="true" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_main_list.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2" />
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Adapters/BillsAdapterView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="27" column="51" selection-start-line="27" selection-start-column="51" selection-end-line="27" selection-end-column="51" />
+            <state relative-caret-position="119">
+              <caret line="26" column="31" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="31" />
               <folding>
-                <element signature="e#1662#1823#0" expanded="true" />
-                <element signature="e#1822#1823#0" expanded="true" />
+                <element signature="e#580#586#0" expanded="true" />
+                <element signature="e#1745#1746#0" expanded="true" />
+                <element signature="e#1779#1780#0" expanded="true" />
+                <element signature="e#1675#1676#0" expanded="true" />
+                <element signature="e#1711#1712#0" expanded="true" />
+                <element signature="e#2273#2437#0" expanded="true" />
+                <element signature="e#2874#3149#0" expanded="true" />
+                <element signature="e#3148#3149#0" expanded="true" />
+                <element signature="e#3252#3519#0" expanded="true" />
+                <element signature="e#3518#3519#0" expanded="true" />
+                <element signature="e#2436#2437#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment2.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="66" selection-start-line="66" selection-end-line="66" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="90" column="13" selection-start-line="90" selection-start-column="13" selection-end-line="90" selection-end-column="45" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#takePhoto#0;class#MainActivity#0" />
+                <element signature="method#uploadPhoto#0;class#MainActivity#0" />
+                <element signature="method#onRequestPermissionsResult#0;class#MainActivity#0" />
+                <element signature="method#addImageToFirebaseStorage#0;class#MainActivity#0" />
+                <element signature="class#DownLoadImageTask#0;class#MainActivity#0" />
               </folding>
             </state>
           </provider>
@@ -129,7 +171,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>btnUploadFoto</find>
       <find>mStorageRef</find>
       <find>btn_fgmt1_next</find>
       <find>btnUploadNewPhoto</find>
@@ -159,6 +200,7 @@
       <find>hint_comercio</find>
       <find>fragm</find>
       <find>pricesma</find>
+      <find>btnDeleteBill</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -176,22 +218,22 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Models/MyApplication.java" />
         <option value="$PROJECT_DIR$/local.properties" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment3.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment3.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Utilities/ProgressBarCustom.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/LogIn/FragmentLogin.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Utilities/GeneralValidations.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Models/Bill.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Maps/MapsActivityCurrentPlace.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-v23/fragment_fragment1.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment1.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/navigation/nav_graph.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment2.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment2.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment3.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment3.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/FragmentList.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Adapters/BillsAdapterView.java" />
       </list>
     </option>
@@ -210,9 +252,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
       <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -253,6 +294,15 @@
               <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="lusberc" type="462c0819:PsiDirectoryNode" />
               <item name="billwallet" type="462c0819:PsiDirectoryNode" />
+              <item name="Adapters" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ProyectoFinal" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="lusberc" type="462c0819:PsiDirectoryNode" />
+              <item name="billwallet" type="462c0819:PsiDirectoryNode" />
               <item name="Fragments" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -262,7 +312,25 @@
               <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="lusberc" type="462c0819:PsiDirectoryNode" />
               <item name="billwallet" type="462c0819:PsiDirectoryNode" />
+              <item name="LogIn" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ProyectoFinal" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="lusberc" type="462c0819:PsiDirectoryNode" />
+              <item name="billwallet" type="462c0819:PsiDirectoryNode" />
               <item name="Maps" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ProyectoFinal" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="lusberc" type="462c0819:PsiDirectoryNode" />
+              <item name="billwallet" type="462c0819:PsiDirectoryNode" />
+              <item name="Models" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ProyectoFinal" type="1abcf292:AndroidViewProjectNode" />
@@ -288,13 +356,6 @@
               <item name="ProyectoFinal" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
-              <item name="fragment_fragment1" type="c431d0b8:AndroidResGroupNode" />
-            </path>
-            <path>
-              <item name="ProyectoFinal" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
               <item name="navigation" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
             <path>
@@ -305,19 +366,13 @@
             </path>
             <path>
               <item name="ProyectoFinal" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
-              <item name="styles" type="c431d0b8:AndroidResGroupNode" />
-            </path>
-            <path>
-              <item name="ProyectoFinal" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -429,12 +484,18 @@
       <option name="project" value="LOCAL" />
       <updated>1561799500587</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="final">
+      <created>1561817151165</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1561817151165</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.2147651" />
@@ -445,23 +506,23 @@
       <window_info id="Resources Explorer" order="6" />
       <window_info id="Capture Tool" order="7" />
       <window_info id="Favorites" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="0" sideWeight="0.4986577" visible="true" weight="0.4815864" />
+      <window_info anchor="bottom" id="Run" order="0" sideWeight="0.56979865" weight="0.57223797" />
       <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.4986577" weight="0.3286119" />
       <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.4986577" weight="0.3286119" />
       <window_info anchor="bottom" id="Android Profiler" order="3" sideWeight="0.49932885" weight="0.3286119" />
-      <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.49798658" weight="0.4220963" />
+      <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.49731544" weight="0.4220963" />
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.3286119" />
-      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.5013423" side_tool="true" weight="0.3512748" />
+      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.43020135" side_tool="true" weight="0.57223797" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3286119" />
-      <window_info anchor="bottom" id="Build" order="8" sideWeight="0.4986577" weight="0.29886687" />
+      <window_info anchor="bottom" id="Build" order="8" sideWeight="0.49798658" weight="0.29886687" />
       <window_info anchor="bottom" id="Find" order="9" />
-      <window_info anchor="right" id="Hierarchy" weight="0.3295302" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info anchor="right" id="Preview" order="4" weight="0.23288591" />
       <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info anchor="right" id="Hierarchy" order="6" weight="0.3295302" />
     </layout>
     <layout-to-restore>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
@@ -501,33 +562,15 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/MainActivity.java</url>
-          <line>442</line>
+          <line>438</line>
           <properties />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/MainActivity.java</url>
-          <line>424</line>
+          <line>420</line>
           <properties />
           <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/FragmentList.java</url>
-          <line>84</line>
-          <properties />
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/FragmentList.java</url>
-          <line>62</line>
-          <properties />
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment2.java</url>
-          <line>66</line>
-          <properties />
-          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -595,10 +638,6 @@
       <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/bills_list_view.xml">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml">
       <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
@@ -613,28 +652,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/activity_main_drawer.xml">
       <provider selected="true" editor-type-id="text-editor" />
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment3.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="36" column="66" lean-forward="true" selection-start-line="36" selection-start-column="66" selection-end-line="36" selection-end-column="66" />
-          <folding>
-            <element signature="e#1294#1521#0" expanded="true" />
-            <element signature="e#1520#1521#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment3.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-          <folding>
-            <element signature="e#1386#1409#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml">
@@ -726,62 +743,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="37" column="26" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/navigation/nav_graph.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="81" column="49" selection-start-line="81" selection-start-column="49" selection-end-line="81" selection-end-column="49" />
-          <folding>
-            <element signature="e#2701#2724#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="nav-designer" />
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/70367a969328f4ea51ad763388b4191c/jars/classes.jar!/com/google/android/gms/tasks/zzj.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="15" column="44" lean-forward="true" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1768#2006#0" expanded="true" />
-            <element signature="e#2005#2006#0" expanded="true" />
-            <element signature="e#2049#2287#0" expanded="true" />
-            <element signature="e#2286#2287#0" expanded="true" />
-            <element signature="e#2611#3029#0" expanded="true" />
-            <element signature="e#3028#3029#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="29" column="35" lean-forward="true" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_main_list.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment2.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -809,31 +776,84 @@
       <provider selected="true" editor-type-id="text-editor" />
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/navigation/nav_graph.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="1377">
+          <caret line="81" column="49" selection-start-line="81" selection-start-column="49" selection-end-line="81" selection-end-column="49" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="nav-designer" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="284" column="13" selection-start-line="284" selection-start-column="13" selection-end-line="284" selection-end-column="13" />
+        <state relative-caret-position="410">
+          <caret line="86" column="29" selection-start-line="86" selection-start-column="29" selection-end-line="86" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4167#4198#0" expanded="true" />
-            <element signature="e#4200#4232#0" expanded="true" />
-            <element signature="e#6645#7026#0" expanded="true" />
-            <element signature="e#7025#7026#0" expanded="true" />
-            <element signature="e#7115#7445#0" expanded="true" />
-            <element signature="e#7444#7445#0" expanded="true" />
-            <element signature="e#8900#9250#0" expanded="true" />
-            <element signature="e#9249#9250#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_fragment3.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="10" column="35" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="35" />
+          <folding>
+            <element signature="e#685#705#0" expanded="true" />
+            <element signature="e#1061#1080#0" expanded="true" />
+            <element signature="e#1382#1405#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment3.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="39" column="68" lean-forward="true" selection-start-line="39" selection-start-column="68" selection-end-line="39" selection-end-column="68" />
+          <folding>
+            <element signature="e#1331#1553#0" expanded="true" />
+            <element signature="e#1552#1553#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="41" column="27" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/bills_list_view.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="47" selection-start-line="36" selection-start-column="47" selection-end-line="36" selection-end-column="47" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_main_list.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="90" column="13" selection-start-line="90" selection-start-column="13" selection-end-line="90" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
             <element signature="method#takePhoto#0;class#MainActivity#0" />
             <element signature="method#uploadPhoto#0;class#MainActivity#0" />
             <element signature="method#onRequestPermissionsResult#0;class#MainActivity#0" />
             <element signature="method#addImageToFirebaseStorage#0;class#MainActivity#0" />
-            <element signature="e#17759#18004#0" expanded="true" />
-            <element signature="e#18003#18004#0" expanded="true" />
-            <element signature="e#18027#19064#0" expanded="true" />
-            <element signature="e#18295#18871#0" expanded="true" />
-            <element signature="e#18870#18871#0" expanded="true" />
-            <element signature="e#19063#19064#0" expanded="true" />
-            <element signature="method#addBillToFirebase#0;class#MainActivity#0" />
             <element signature="class#DownLoadImageTask#0;class#MainActivity#0" />
           </folding>
         </state>
@@ -841,27 +861,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/Fragment2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="67" column="31" selection-start-line="67" selection-start-column="23" selection-end-line="67" selection-end-column="31" />
-          <folding>
-            <element signature="e#2713#3306#0" expanded="true" />
-            <element signature="e#3305#3306#0" expanded="true" />
-            <element signature="e#3346#3850#0" expanded="true" />
-            <element signature="e#3849#3850#0" expanded="true" />
-            <element signature="e#4978#5375#0" expanded="true" />
-            <element signature="e#5374#5375#0" expanded="true" />
-            <element signature="e#5481#6721#0" expanded="true" />
-            <element signature="e#6720#6721#0" expanded="true" />
-            <element signature="e#6841#7988#0" expanded="true" />
-            <element signature="e#7987#7988#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="105">
+          <caret line="66" selection-start-line="66" selection-end-line="66" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="29" lean-forward="true" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Fragments/FragmentList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="56" column="22" selection-start-line="56" selection-start-column="22" selection-end-line="56" selection-end-column="22" />
+        <state relative-caret-position="765">
+          <caret line="71" column="24" lean-forward="true" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -870,11 +886,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/lusberc/billwallet/Adapters/BillsAdapterView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="27" column="51" selection-start-line="27" selection-start-column="51" selection-end-line="27" selection-end-column="51" />
+        <state relative-caret-position="119">
+          <caret line="26" column="31" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="31" />
           <folding>
-            <element signature="e#1662#1823#0" expanded="true" />
-            <element signature="e#1822#1823#0" expanded="true" />
+            <element signature="e#580#586#0" expanded="true" />
+            <element signature="e#1745#1746#0" expanded="true" />
+            <element signature="e#1779#1780#0" expanded="true" />
+            <element signature="e#1675#1676#0" expanded="true" />
+            <element signature="e#1711#1712#0" expanded="true" />
+            <element signature="e#2273#2437#0" expanded="true" />
+            <element signature="e#2874#3149#0" expanded="true" />
+            <element signature="e#3148#3149#0" expanded="true" />
+            <element signature="e#3252#3519#0" expanded="true" />
+            <element signature="e#3518#3519#0" expanded="true" />
+            <element signature="e#2436#2437#0" expanded="true" />
           </folding>
         </state>
       </provider>

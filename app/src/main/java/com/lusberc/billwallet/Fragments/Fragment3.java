@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -36,18 +38,16 @@ public class Fragment3 extends Fragment {
     private void setupUI(View view) {
         TextView txtmessage = view.findViewById(R.id.txt_showmsj);
         Button btn_next = view.findViewById(R.id.btnUploadNewPhoto);
-        Fragment3Args args = Fragment3Args
-                .fromBundle(getArguments());
-        txtmessage.setText(args.getMessage());
+        final ImageButton imageButton = (ImageButton) view.findViewById(R.id.txt_frmtid);
 
-        btn_next.setOnClickListener(new View.OnClickListener() {
+        imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Navigation.findNavController(v)
-                            .navigate(R.id.fragment3to1);
-
+                Navigation.findNavController(v)
+                        .navigate(R.id.fragment3to1);
             }
         });
+
     }
 
 }

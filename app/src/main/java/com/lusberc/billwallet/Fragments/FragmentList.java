@@ -75,15 +75,7 @@ public class FragmentList extends Fragment {
             }
         });
 
-        /*
-                db.collection("textBills")
-                .document(MyApplication._mBill.getUserID())
-                .collection("Facturas")
-                .document(MyApplication._mBill.getImageName())
-         */
-        
         BillsAdapterView adapter = new BillsAdapterView(view.getContext() ,layoutId, mList);
-
         ListView mListView = view.findViewById(R.id.listViewBills);
         mListView.setAdapter(adapter);
     }
